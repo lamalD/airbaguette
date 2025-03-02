@@ -1,0 +1,110 @@
+'use client'
+
+import { Button } from '@/components/ui/button'
+import { LoaderIcon, Minus, Plus, ShoppingBasket } from 'lucide-react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import React, { useContext, useState } from 'react'
+import GlobalApi from '../_utils/GlobalApi'
+import { toast } from 'sonner'
+import { UpdateCartContext } from '../_context/UpdateCartContext'
+
+function ProductItemDetail({product}) {
+
+    console.log(product)
+
+    const router = useRouter()
+    const jwt = sessionStorage.getItem('jwt')
+    const user = JSON.parse(sessionStorage.getItem('user'))
+
+    const {updateCart, setUpdateCart} = useContext(UpdateCartContext)
+    const [productTotalPrice, setProductTotalPrice] = useState(product.sellingPrice ? product.sellingPrice : product.mrp)
+    const [quantity, setQuantity] = useState(1)
+    const [loader, setLoader] = useState(false)
+
+    const addToCart = () => {
+        setLoader(true)
+        if (!jwt) {
+            router.push('/sign-in')
+            setLoader(flase)
+            return
+        }
+
+        const data = {
+            data: {
+                Quantity: quantity,
+                Amount: productTotalPrice.toFixed(2),
+                products: product.documentId,
+                user: user.id,
+                userId: user.id
+            }
+        }
+        console.log(data)
+        GlobalApi.addToCart(data, jwt).then((resp) => {
+            console.log(resp)
+            toast('added to cart')
+            setUpdateCart(!updateCart)
+            setLoader(false)
+        }, (e) => {
+            toast('Error while adding into cart', e)
+            setLoader(false)
+        })
+    }
+
+  return (
+    <div className='grid grid-cols-1 md:grid-cols-2 p-7 bg-white text-black'>
+        <Image 
+            src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL+product.image?.url}
+            alt=''
+            width={300}
+            height={300}
+            className='bg-slate-200 p-5 h-[320px] w-[300px] object-contain rounded-md'
+        />
+        <div className='flex flex-col gap-3'>
+            <div>
+                <h2 className='text-2xl font-bold'>{product.name}</h2>
+                <h2 className='text-sm text-gray-500'>{product.description}</h2>
+            </div>
+            <div className='flex gap-6'>
+                {product.sellingPrice && <h2 className='font-bold text-3xl'>€ {product.sellingPrice}</h2>}
+                <h2 className={`font-bold text-3xl ${product.sellingPrice&&'line-through text-slate-200'}`}>€ {product.mrp}</h2>
+            </div>
+            <h2 className='font-bold text-lg'>Quantity ({product.itemQuantityType})</h2>
+            <div className='flex flex-col items-baseline gap-3'>
+                <div className='flex gap-3 items-center'>
+                    <div className='my-2 flex gap-5 items-center justify-between'>
+                        <Button 
+                            variant='outline'
+                            size='icon'
+                            className='border-2 border-black'
+                            disabled={quantity==1} 
+                            onClick={() => setQuantity(quantity-1)}
+                        >
+                            <Minus className='text-black'/>
+                        </Button>
+                        <h2>{quantity}</h2>
+                        <Button
+                            variant='outline'
+                            size='icon'
+                            className='border-2 border-black'
+                            onClick={() => setQuantity(quantity+1)}
+                        >
+                            <Plus className='text-black'/>
+                        </Button>
+                    </div>
+                    <h2 className='text-2xl font-bold'> = € {(quantity*productTotalPrice).toFixed(2)}</h2>
+                </div>
+                <Button disabled={loader} className='flex gap-3' onClick={() => addToCart()}>
+                    <ShoppingBasket />
+                    {loader ? <LoaderIcon className='animated-spin'/>: 'Add to Cart'}
+                </Button>
+            </div>
+            <div>
+                <h2 className='font-bold'><span>Category:</span>{product.category.name}</h2>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default ProductItemDetail

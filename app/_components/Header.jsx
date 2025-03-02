@@ -1,0 +1,229 @@
+'use client'
+
+import Image from 'next/image'
+import React, { useContext, useEffect, useState } from 'react'
+
+import { Button } from '@/components/ui/button'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+  
+import { CircleUserRound, LayoutGrid, Search, ShoppingBasket } from 'lucide-react'
+import GlobalApi from '../_utils/GlobalApi'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { UpdateCartContext } from '../_context/UpdateCartContext'
+import CartItemList from './CartItemList'
+import { toast } from 'sonner'
+  
+
+function Header() {
+
+    const router = useRouter()
+
+    const [categoryList, setCategoryList] = useState([])
+    const [totalCartItem, setTotalCartItem] = useState(0)
+    const {updateCart, setUpdateCart} = useContext(UpdateCartContext)
+    const [cartItemList, setCartItemList] = useState([])
+    const [subtotal, setSubtotal] = useState(0)
+
+    const isLoggedIn = sessionStorage.getItem('jwt') ? true : false
+    const user = JSON.parse(sessionStorage.getItem('user'))
+    const jwt = sessionStorage.getItem('jwt')
+
+    useEffect(() => {
+      getCategoryList()
+    }, [])
+    
+    useEffect(() => {
+        console.log('updateCart triggert on Header.jsx')
+        getCartItems()    
+    }, [updateCart])
+    
+    useEffect (() => {
+
+        let total = 0
+        cartItemList.forEach(element => {
+            total = total + element.amount
+        });
+
+        setSubtotal(total)
+
+    }, [cartItemList])
+
+    // console.log(cartItemList)
+
+    const getCategoryList = () => {
+        GlobalApi.getCategory().then(resp => {
+            console.log(resp.data.data)
+            setCategoryList(resp.data.data)
+        })
+    }
+
+    const getCartItems = async () => {
+
+        const cartItemList_ = await GlobalApi.getCartItems(user.id, jwt)
+        console.log(cartItemList_)
+        setTotalCartItem(cartItemList_?.length)
+        setCartItemList(cartItemList_)
+    }
+
+    const onSignOut = () => {
+        sessionStorage.clear()
+        router.push('/sign-in')
+    }
+
+    const onDeleteItem = (id) => {
+
+        GlobalApi.deleteCartItem(id, jwt).then(resp => {
+            toast.success('Item deleted')
+            getCartItems()
+        })
+    }
+
+    const handleCheckout = async () => {
+        if (!jwt) {
+            router.push('/sign-in')
+        } else {
+
+            const payload = {
+                data : {
+                    // paymentId: data.paymentId,
+                    totalOrderAmount: subtotal,
+                    userId: user.id,
+                    username: user.username,
+                    email: user.email,
+                    paymentDone: false,
+                    orderItemList: cartItemList.map(item => ({
+                        product: item.product,
+                        amount: item.amount,
+                        quantity: item.quantity
+                    }))
+                }
+            }
+
+            GlobalApi.createOrder(payload, jwt).then(resp => {
+                console.log('handleCheckout resp: ', resp.data.data)
+                toast.success('Order placed, next step payment')
+
+                const orderId = resp.data.data.documentId
+
+                handlePayment(orderId)
+            })
+        }
+    }
+
+    const handlePayment = (orderId) => {
+
+        console.log('orderId: ', orderId)
+
+        router.push('/checkout')
+    }
+
+  return (
+    <div className='flex p-5 shadow-md justify-between'>
+        <div className='flex items-center gap-8'>
+            <Image src='/logo.png' alt='logo' width={150} height={100} />
+            <div className='text-6xl'>
+                <h2 className='text-secondary'>AIR</h2>
+                <h2 className='text-primary'>BAGUETTE</h2>
+            </div>
+
+                {/* <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <h2 className='hidden md:flex gap-2 items-center border rounded-full p-2 px-10 bg-slate-200 cursor-pointer'>
+                            <LayoutGrid className='w-5 h-5'/>
+                            Category
+                        </h2>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuLabel>Browse Category</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {categoryList.map((category, index) => (
+                            <DropdownMenuItem 
+                                    key={index} 
+                                    className='cursor-pointer hover:bg-slate-200'
+                                >
+                                    <Link href={'/products-category/'+category.name} className='flex gap-4 items-center'>
+                                            <Image 
+                                                src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL+category.icon[0]?.url} 
+                                                alt='icon' 
+                                                width={50} 
+                                                height={50} 
+                                            />
+                                            <h2 className=''>{category.name}</h2>
+                                    </Link>
+                                </DropdownMenuItem>
+                            ))
+                        }
+                    </DropdownMenuContent>
+                </DropdownMenu> */}
+
+            {/* <div className='md:flex gap-3 items-center border rounded-full p-2 px-2 hidden'>
+                <Search />
+                <input type="text" placeholder='Search' className='outline-none'/>
+            </div>   */}
+        </div>
+        <div className='flex gap-5 items-center'>
+            <Sheet>
+                <SheetTrigger asChild>
+                    <div className='flex gap-2 items-center justify-between text-lg bg-secondary rounded-md px-4 py-1.5 cursor-pointer'>
+                        <ShoppingBasket className='h-7 w-7 text-white cursor-pointer'/>
+                        <span className='bg-white text-secondary px-2 rounded-full'>{totalCartItem}</span>
+                    </div>
+                </SheetTrigger>
+                <SheetContent>
+                    <SheetHeader>
+                    <SheetTitle className='bg-primary text-white font-bold text-lg p-2'>My Cart</SheetTitle>
+                    <SheetDescription>
+                        <CartItemList cartItemList={cartItemList} onDeleteItem={onDeleteItem} />
+                    </SheetDescription>
+                    </SheetHeader>
+                <SheetClose asChild>
+                    <div className='absolute w-[90%] bottom-6 flex flex-col'>
+                        <h2 className='text-lg font-bold flex justify-between'>Subtotal <span>€ {subtotal.toFixed(2)}</span></h2>
+                        {/* <Button onClick={() => router.push(jwt ? '/checkout' : '/sign-in')}>Checkout</Button> */}
+                        <Button onClick={() => handleCheckout()}>Checkout</Button>
+                    </div>
+                </SheetClose>
+                </SheetContent>
+            </Sheet>
+            {!isLoggedIn? 
+                <Link href={'/sign-in'}>
+                    <Button>Login</Button>
+                </Link>
+                :
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <CircleUserRound className='h-10 w-10 p-0.5 bg-slate-100 text-blue-500 rounded-full border border-blue-500'/>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>My Order</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onSignOut()}>Logout</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            }
+
+        </div>
+    </div>
+  )
+}
+
+export default Header
