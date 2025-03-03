@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { Suspense, useContext, useEffect, useState } from 'react'
 
 import { format, parse } from 'date-fns'
 import GlobalApi from '@/app/_utils/GlobalApi'
@@ -147,4 +147,14 @@ function SuccessPage() {
 }
 
 
-export default SuccessPage
+// export default SuccessPage
+
+// Wrap the SuccessPage component in a Susp ense boundary
+
+export default function WrappedSuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SuccessPage />
+    </Suspense>
+  );
+}
