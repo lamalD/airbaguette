@@ -11,9 +11,13 @@ import { UpdateCartContext } from '@/app/_context/UpdateCartContext'
 
 function SuccessPage() {
 
-  const isLoggedIn = sessionStorage.getItem('jwt') ? true : false
-  const user = JSON.parse(sessionStorage.getItem('user'))
-  const jwt = sessionStorage.getItem('jwt')
+  // const isLoggedIn = sessionStorage.getItem('jwt') ? true : false
+  // const user = JSON.parse(sessionStorage.getItem('user'))
+  // const jwt = sessionStorage.getItem('jwt')
+
+  const [isLoggedIn, setIsLoggedIn] = useState(null)
+  const [user, setUser ] = useState(null)
+  const [jwt, setJwt] = useState(null)
 
   const {updateCart, setUpdateCart} = useContext(UpdateCartContext)
 
@@ -27,6 +31,15 @@ function SuccessPage() {
   const phone = searchParams.get('pn')
   const date = searchParams.get('dd')
   // const docId = searchParams.get('id')
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+        const storedJwt = sessionStorage.getItem('jwt');
+        setUser (storedUser );
+        setJwt(storedJwt);
+    }
+  }, [])
 
   useEffect (() => {
   
