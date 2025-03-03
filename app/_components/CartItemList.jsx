@@ -2,28 +2,12 @@
 
 import React, { useEffect, useState } from 'react'
 
-// import { Button } from '@/components/ui/button'
 import { TrashIcon } from 'lucide-react'
 import Image from 'next/image'
 
 function CartItemList({cartItemList, onDeleteItem}) {
 
     console.log(cartItemList)
-
-    // const [subtotal, setSubtotal] = useState(0)
-
-    // useEffect (() => {
-
-    //     let total = 0
-    //     cartItemList.forEach(element => {
-    //         total = total + element.amount
-    //     });
-
-    //     setSubtotal(total)
-
-    // }, [cartItemList])
-
-    // console.log(cartItemList)
 
   return (
     <div>

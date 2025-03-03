@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 function CategoryList({categoryList}) {
+    
   return (
     <div className='mt-2'>
         {/* <h2 className='text-primary font-bold text-2xl'>Shop by Category</h2> */}

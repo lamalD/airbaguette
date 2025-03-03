@@ -42,8 +42,20 @@ function Header() {
     const [subtotal, setSubtotal] = useState(0)
 
     const isLoggedIn = sessionStorage.getItem('jwt') ? true : false
-    const user = JSON.parse(sessionStorage.getItem('user'))
-    const jwt = sessionStorage.getItem('jwt')
+    // const user = JSON.parse(sessionStorage.getItem('user'))
+    // const jwt = sessionStorage.getItem('jwt')
+
+    const [user, setUser ] = useState(null);
+    const [jwt, setJwt] = useState(null)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+            const storedJwt = sessionStorage.getItem('jwt');
+            setUser (storedUser );
+            setJwt(storedJwt);
+        }
+    }, [])
 
     useEffect(() => {
       getCategoryList()

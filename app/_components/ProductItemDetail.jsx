@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { LoaderIcon, Minus, Plus, ShoppingBasket } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import GlobalApi from '../_utils/GlobalApi'
 import { toast } from 'sonner'
 import { UpdateCartContext } from '../_context/UpdateCartContext'
@@ -14,13 +14,25 @@ function ProductItemDetail({product}) {
     console.log(product)
 
     const router = useRouter()
-    const jwt = sessionStorage.getItem('jwt')
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    // const jwt = sessionStorage.getItem('jwt')
+    // const user = JSON.parse(sessionStorage.getItem('user'))
+
+    const [user, setUser ] = useState(null);
+    const [jwt, setJwt] = useState(null)
 
     const {updateCart, setUpdateCart} = useContext(UpdateCartContext)
     const [productTotalPrice, setProductTotalPrice] = useState(product.sellingPrice ? product.sellingPrice : product.mrp)
     const [quantity, setQuantity] = useState(1)
     const [loader, setLoader] = useState(false)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+            const storedJwt = sessionStorage.getItem('jwt');
+            setUser (storedUser );
+            setJwt(storedJwt);
+        }
+    }, [])
 
     const addToCart = () => {
         setLoader(true)

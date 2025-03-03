@@ -34,8 +34,11 @@ function CheckOut() {
 
     const router = useRouter()
       
-    const user = JSON.parse(sessionStorage.getItem('user'))
-    const jwt = sessionStorage.getItem('jwt')
+    // const user = JSON.parse(sessionStorage.getItem('user'))
+    // const jwt = sessionStorage.getItem('jwt')
+
+    const [user, setUser ] = useState(null)
+    const [jwt, setJwt] = useState(null)
 
     const [errorMessage, setErrorMessage] = useState();
     const [clientSecret, setClientSecret] = useState("");
@@ -69,6 +72,15 @@ function CheckOut() {
             console.log('Selected date is out of range')
         }
     }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+            const storedJwt = sessionStorage.getItem('jwt');
+            setUser (storedUser );
+            setJwt(storedJwt);
+        }
+    }, [])
 
     useEffect (() => {
 

@@ -23,8 +23,11 @@ function Checkout() {
 
   const router = useRouter()
   
-  const user = JSON.parse(sessionStorage.getItem('user'))
-  const jwt = sessionStorage.getItem('jwt')
+  // const user = JSON.parse(sessionStorage.getItem('user'))
+  // const jwt = sessionStorage.getItem('jwt')
+
+  const [user, setUser ] = useState(null);
+  const [jwt, setJwt] = useState(null)
 
   const [totalCartItem, setTotalCartItem] = useState(0)
   const [cartItemList, setCartItemList] = useState([])
@@ -39,6 +42,15 @@ function Checkout() {
   const [phone, setPhone] = useState()
   const [zip, setZip] = useState()
   const [address, setAddress] = useState()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+        const storedJwt = sessionStorage.getItem('jwt');
+        setUser (storedUser );
+        setJwt(storedJwt);
+    }
+  }, [])
 
   useEffect (() => {
 
