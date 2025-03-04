@@ -64,6 +64,8 @@ function Checkout() {
 
   const getCartItems = async () => {
   
+    console.log('user: ', user)
+    console.log('jwt: ', jwt)
     console.log(`getCartItems triggert for user ${user.username} with documentId ${user.documentId}`)
 
       const cartItemList_ = await GlobalApi.getCartItems(user.documentId, jwt)
