@@ -65,6 +65,7 @@ function SuccessPage() {
   console.log('DD: ', deliveryDate)
 
   const completeOrder = async () => {
+    const storedUser  = JSON.parse(sessionStorage.getItem('user'))
     const storedJwt = sessionStorage.getItem('jwt')
     if (!storedJwt) {
       router.push('/sign-in')
@@ -73,8 +74,8 @@ function SuccessPage() {
         const payload = {
             data : {
               totalOrderAmount: amount,
-              userId: user.id,
-              username: user.username,
+              userId: storedUser.id,
+              username: storedUser.username,
               firstName: firstName,
               lastName: lastName,
               email: email,
