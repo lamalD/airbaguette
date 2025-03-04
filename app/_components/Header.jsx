@@ -159,7 +159,10 @@ function Header() {
   return (
     <div className='flex p-5 shadow-md justify-between'>
         <div className='flex items-center gap-8'>
-            <Link>
+            <Link
+                href='/'
+                className='flex flex-row items-center space-x-2 cursor-pointer'
+            >
                 <Image 
                     src='/logo.png' 
                     alt='logo' 
@@ -209,7 +212,7 @@ function Header() {
             </div>   */}
         </div>
         <div className='flex flex-col md:flex-row gap-5 items-center justify-center md:justify-end'>
-            {/* {isLoggedIn && */}
+            {isLoggedIn &&
                 <Sheet>
                     <SheetTrigger asChild>
                         <div className='flex gap-2 items-center justify-between text-lg bg-secondary rounded-md px-4 py-1.5 cursor-pointer'>
@@ -233,7 +236,7 @@ function Header() {
                     </SheetClose>
                     </SheetContent>
                 </Sheet>
-                {/* } */}
+            }
             {!isLoggedIn? 
                 <Link href={'/sign-in'}>
                     <Button>Login</Button>
