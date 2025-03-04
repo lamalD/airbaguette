@@ -62,8 +62,8 @@ function SuccessPage() {
   console.log('DD: ', deliveryDate)
 
   const completeOrder = async () => {
-
-    if (!jwt) {
+    const storedJwt = sessionStorage.getItem('jwt')
+    if (!storedJwt) {
       router.push('/sign-in')
     } else {
 
