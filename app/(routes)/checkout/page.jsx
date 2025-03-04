@@ -82,12 +82,17 @@ function Checkout() {
 
   useEffect(() => {
 
-    handlePayment()
+    if (subtotal > 0) {
 
-    console.log('subtotal = ', subtotal)
+      console.log('subtotal = ', subtotal)
+      
+      handlePayment(subtotal)
+  
+    }
+
 }, [subtotal])
 
-const handlePayment = () => {
+const handlePayment = (subtotal) => {
     console.log("amount: ", convertToSubcurrency(subtotal))
 
     fetch('/api/create-intent', {
