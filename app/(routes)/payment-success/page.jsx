@@ -98,7 +98,7 @@ function SuccessPage() {
           console.log(documentId);
   
           // Update Order
-          const updateResponse = await GlobalApi.updateOrder(documentId, payload, jwt);
+          const updateResponse = await GlobalApi.updateOrder(documentId, payload, storedJwt);
           console.log('handleCheckout resp: ', updateResponse.data.data);
           toast.success('Order placed confirmed');
   
