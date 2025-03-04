@@ -167,7 +167,7 @@ function CheckOut() {
             elements,
             clientSecret,
             confirmParams: {
-              return_url: `https://www.airbaguette.vercel.app/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${date}&id=${cartItemList.documentId}`,
+              return_url: `https://airbaguette.vercel.app/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${date}&id=${cartItemList.documentId}`,
             },
             
           });

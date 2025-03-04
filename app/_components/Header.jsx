@@ -91,10 +91,17 @@ function Header() {
 
     const getCartItems = async () => {
 
-        const cartItemList_ = await GlobalApi.getCartItems(user.id, jwt)
-        console.log(cartItemList_)
-        setTotalCartItem(cartItemList_?.length)
-        setCartItemList(cartItemList_)
+        const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+            const storedJwt = sessionStorage.getItem('jwt');
+            console.log(`getCartItems triggert for user ${storedUser.username} with id ${storedUser.id}`)
+                
+                if (storedUser != null) {
+                
+                const cartItemList_ = await GlobalApi.getCartItems(storedUser.id, storedJwt)
+                    
+                setTotalCartItem(cartItemList_?.length)
+                setCartItemList(cartItemList_)              
+        }
     }
 
     const onSignOut = () => {
