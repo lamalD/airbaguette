@@ -69,12 +69,12 @@ function Checkout() {
     console.log('user: ', user)
     console.log('jwt: ', jwt)
     const storedUser  = JSON.parse(sessionStorage.getItem('user'));
-    // const storedJwt = sessionStorage.getItem('jwt');
+    const storedJwt = sessionStorage.getItem('jwt');
     console.log(`getCartItems triggert for user ${storedUser.username} with id ${storedUser.id}`)
 
     if (storedUser != null) {
 
-      const cartItemList_ = await GlobalApi.getCartItems(storedUser.id, jwt)
+      const cartItemList_ = await GlobalApi.getCartItems(storedUser.id, storedJwt)
       
       setTotalCartItem(cartItemList_?.length)
       setCartItemList(cartItemList_)
