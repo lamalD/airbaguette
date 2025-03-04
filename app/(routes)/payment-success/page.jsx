@@ -93,7 +93,7 @@ function SuccessPage() {
 
         try {
           // Get Order ID
-          const orderResponse = await GlobalApi.getOrderId(user.id, jwt);
+          const orderResponse = await GlobalApi.getOrderId(storedUser.id, storedJwt);
           const documentId = orderResponse.data.data[0].documentId;
           console.log(documentId);
   
@@ -107,7 +107,7 @@ function SuccessPage() {
           // handlePayment(orderId);
   
           // Get Cart IDs
-          const cartIdArrayResponse = await GlobalApi.getCartId(user.id, jwt).then( resp => {
+          const cartIdArrayResponse = await GlobalApi.getCartId(storedUser.id, storedJwt).then( resp => {
             return resp.data.data
           });
           console.log('getCartId: ', cartIdArrayResponse);
@@ -120,7 +120,7 @@ function SuccessPage() {
   
             // Delete Shopping Cart items by documentId
             for (const docId of documentIds) {
-                await GlobalApi.deleteShoppingCart(docId, jwt);
+                await GlobalApi.deleteShoppingCart(docId, storedJwt);
                 console.log(`Deleted item with documentId: ${docId}`);
             }
   
