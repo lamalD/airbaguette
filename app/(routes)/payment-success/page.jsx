@@ -129,7 +129,7 @@ function SuccessPage() {
             
           }
 
-          router.push('/')
+          // router.push('/')
       } catch (error) {
           console.error('Error during order completion:', error);
           toast.error('An error occurred while completing the order');
