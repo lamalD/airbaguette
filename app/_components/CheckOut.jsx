@@ -83,8 +83,8 @@ function CheckOut() {
     }, [])
 
     useEffect (() => {
-
-        if (!jwt) {
+        const storedJwt = sessionStorage.getItem('jwt');
+        if (!storedJwt) {
           router.push('/sign-in')
         }
         getCartItems()

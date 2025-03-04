@@ -57,8 +57,8 @@ function Checkout() {
   console.log('checkout page loaded after first useEffect')
 
   useEffect (() => {
-
-    if (!jwt) {
+    const storedJwt = sessionStorage.getItem('jwt');
+    if (!storedJwt) {
       router.push('/sign-in')
     }
     getCartItems()
