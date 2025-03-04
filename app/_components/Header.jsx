@@ -209,7 +209,7 @@ function Header() {
             </div>   */}
         </div>
         <div className='flex flex-col md:flex-row gap-5 items-center justify-center md:justify-end'>
-            {isLoggedIn &&
+            {/* {isLoggedIn && */}
                 <Sheet>
                     <SheetTrigger asChild>
                         <div className='flex gap-2 items-center justify-between text-lg bg-secondary rounded-md px-4 py-1.5 cursor-pointer'>
@@ -232,7 +232,8 @@ function Header() {
                         </div>
                     </SheetClose>
                     </SheetContent>
-                </Sheet>}
+                </Sheet>
+                {/* } */}
             {!isLoggedIn? 
                 <Link href={'/sign-in'}>
                     <Button>Login</Button>
