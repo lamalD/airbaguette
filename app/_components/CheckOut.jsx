@@ -98,7 +98,7 @@ function CheckOut() {
           setCartItemList(cartItemList_)
       }
     
-      useEffect (() => {
+    useEffect (() => {
     
         let total = 0
         cartItemList.forEach(element => {
@@ -108,9 +108,9 @@ function CheckOut() {
     
         setSubtotal(total)
     
-      }, [cartItemList])
+    }, [cartItemList])
     
-      useEffect(() => {
+    useEffect(() => {
     
         handlePayment()
     
@@ -155,7 +155,7 @@ function CheckOut() {
             elements,
             clientSecret,
             confirmParams: {
-              return_url: `http://www.airbaguette.vercel.app/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${date}&id=${cartItemList.documentId}`,
+              return_url: `https://www.airbaguette.vercel.app/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${date}&id=${cartItemList.documentId}`,
             },
             
           });

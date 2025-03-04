@@ -43,6 +43,8 @@ function Checkout() {
   const [zip, setZip] = useState()
   const [address, setAddress] = useState()
 
+  console.log('checkout page loaded')
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
         const storedUser  = JSON.parse(sessionStorage.getItem('user'));
