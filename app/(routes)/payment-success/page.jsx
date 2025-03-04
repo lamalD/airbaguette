@@ -1,6 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React, { Suspense, useContext, useEffect, useState } from 'react'
 
 import { format, parse } from 'date-fns'
@@ -10,6 +11,8 @@ import { UpdateCartContext } from '@/app/_context/UpdateCartContext'
 
 
 function SuccessPage() {
+
+  const router = useRouter()
 
   // const isLoggedIn = sessionStorage.getItem('jwt') ? true : false
   // const user = JSON.parse(sessionStorage.getItem('user'))
@@ -42,8 +45,8 @@ function SuccessPage() {
   }, [])
 
   useEffect (() => {
-  
-      if (!jwt) {
+    const storedJwt = sessionStorage.getItem('jwt')
+      if (storedJwt) {
         router.push('/sign-in')
       }
 
