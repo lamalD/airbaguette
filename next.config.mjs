@@ -4,9 +4,19 @@ const nextConfig = {
     images: {
         domains:[
             'localhost', 
-            'https://beneficial-strength-ca77e606b4.strapiapp.com', 
-            'https://beneficial-strength-ca77e606b4.media.strapiapp.com',
-        ]
+            'beneficial-strength-ca77e606b4.strapiapp.com', 
+            'beneficial-strength-ca77e606b4.media.strapiapp.com',
+        ],
+        remotePatterns: [
+            {
+              protocol: "https",
+              hostname: "beneficial-strength-ca77e606b4.strapiapp.com",
+            },
+            {
+                protocol: "https",
+                hostname: "beneficial-strength-ca77e606b4.media.strapiapp.com",
+              },
+          ],
     }
 };
 
