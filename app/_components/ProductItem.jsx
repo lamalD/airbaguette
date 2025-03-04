@@ -30,7 +30,7 @@ function ProductItem({product}) {
   return (
     <div className='p-2 md:p-5 flex flex-col md:flex-row md:space-x-8 items-center justify-center md:justify-between border rounded-lg min-w-[200px] md:min-w-[400px] hover:scale-105 hover:shadow-md hover:ml-3 transition-all ease-in-out scrollbar-hide'>
         <Image 
-            src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL+product.image?.url} 
+            src={product.image?.url} 
             alt='image' 
             className='object-contain' 
             width={150} 

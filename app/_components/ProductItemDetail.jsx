@@ -66,7 +66,7 @@ function ProductItemDetail({product}) {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 p-7 bg-white text-black'>
         <Image 
-            src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL+product.image?.url}
+            src={product.image?.url}
             alt=''
             width={300}
             height={300}
