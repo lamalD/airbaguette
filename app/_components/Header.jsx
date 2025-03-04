@@ -159,11 +159,19 @@ function Header() {
   return (
     <div className='flex p-5 shadow-md justify-between'>
         <div className='flex items-center gap-8'>
-            <Image src='/logo.png' alt='logo' width={150} height={100} />
-            <div className='text-6xl'>
-                <h2 className='text-secondary'>AIR</h2>
-                <h2 className='text-primary'>BAGUETTE</h2>
-            </div>
+            <Link>
+                <Image 
+                    src='/logo.png' 
+                    alt='logo' 
+                    className='w-28 sm:w-32 md:w-44 lg:w-52'
+                    width={150} 
+                    height={100} 
+                />
+                <div className='text-3xl md:text-5xl lg:text-6xl'>
+                    <h2 className='text-secondary'>AIR</h2>
+                    <h2 className='text-primary'>BAGUETTE</h2>
+                </div>
+            </Link>
 
                 {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -200,30 +208,31 @@ function Header() {
                 <input type="text" placeholder='Search' className='outline-none'/>
             </div>   */}
         </div>
-        <div className='flex gap-5 items-center'>
-            <Sheet>
-                <SheetTrigger asChild>
-                    <div className='flex gap-2 items-center justify-between text-lg bg-secondary rounded-md px-4 py-1.5 cursor-pointer'>
-                        <ShoppingBasket className='h-7 w-7 text-white cursor-pointer'/>
-                        <span className='bg-white text-secondary px-2 rounded-full'>{totalCartItem}</span>
-                    </div>
-                </SheetTrigger>
-                <SheetContent>
-                    <SheetHeader>
-                    <SheetTitle className='bg-primary text-white font-bold text-lg p-2'>My Cart</SheetTitle>
-                    <SheetDescription>
-                        <CartItemList cartItemList={cartItemList} onDeleteItem={onDeleteItem} />
-                    </SheetDescription>
-                    </SheetHeader>
-                <SheetClose asChild>
-                    <div className='absolute w-[90%] bottom-6 flex flex-col'>
-                        <h2 className='text-lg font-bold flex justify-between'>Subtotal <span>€ {subtotal.toFixed(2)}</span></h2>
-                        {/* <Button onClick={() => router.push(jwt ? '/checkout' : '/sign-in')}>Checkout</Button> */}
-                        <Button onClick={() => handleCheckout()}>Checkout</Button>
-                    </div>
-                </SheetClose>
-                </SheetContent>
-            </Sheet>
+        <div className='flex flex-col md:flex-row gap-5 items-center justify-center md:justify-end'>
+            {isLoggedIn &&
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <div className='flex gap-2 items-center justify-between text-lg bg-secondary rounded-md px-4 py-1.5 cursor-pointer'>
+                            <ShoppingBasket className='h-7 w-7 text-white cursor-pointer'/>
+                            <span className='bg-white text-secondary px-2 rounded-full'>{totalCartItem}</span>
+                        </div>
+                    </SheetTrigger>
+                    <SheetContent>
+                        <SheetHeader>
+                        <SheetTitle className='bg-primary text-white font-bold text-lg p-2'>My Cart</SheetTitle>
+                        <SheetDescription>
+                            <CartItemList cartItemList={cartItemList} onDeleteItem={onDeleteItem} />
+                        </SheetDescription>
+                        </SheetHeader>
+                    <SheetClose asChild>
+                        <div className='absolute w-[90%] bottom-6 flex flex-col'>
+                            <h2 className='text-lg font-bold flex justify-between'>Subtotal <span>€ {subtotal.toFixed(2)}</span></h2>
+                            {/* <Button onClick={() => router.push(jwt ? '/checkout' : '/sign-in')}>Checkout</Button> */}
+                            <Button onClick={() => handleCheckout()}>Checkout</Button>
+                        </div>
+                    </SheetClose>
+                    </SheetContent>
+                </Sheet>}
             {!isLoggedIn? 
                 <Link href={'/sign-in'}>
                     <Button>Login</Button>
@@ -231,13 +240,13 @@ function Header() {
                 :
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <CircleUserRound className='h-10 w-10 p-0.5 bg-slate-100 text-blue-500 rounded-full border border-blue-500'/>
+                        <CircleUserRound className='h-10 w-10 p-0.5 bg-slate-100 text-primary rounded-full border border-primary'/>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>My Order</DropdownMenuItem>
+                        <DropdownMenuItem>My Order</DropdownMenuItem> */}
                         <DropdownMenuItem onClick={() => onSignOut()}>Logout</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
