@@ -155,7 +155,7 @@ function CheckOut() {
             elements,
             clientSecret,
             confirmParams: {
-              return_url: `http://www.localhost:3000/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${date}&id=${cartItemList.documentId}`,
+              return_url: `http://www.airbaguette.vercel.com/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${date}&id=${cartItemList.documentId}`,
             },
             
           });
