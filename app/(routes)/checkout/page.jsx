@@ -66,8 +66,6 @@ function Checkout() {
 
   const getCartItems = async () => {
   
-    console.log('user: ', user)
-    console.log('jwt: ', jwt)
     const storedUser  = JSON.parse(sessionStorage.getItem('user'));
     const storedJwt = sessionStorage.getItem('jwt');
     console.log(`getCartItems triggert for user ${storedUser.username} with id ${storedUser.id}`)

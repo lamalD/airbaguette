@@ -92,10 +92,17 @@ function CheckOut() {
     
       const getCartItems = async () => {
       
-          const cartItemList_ = await GlobalApi.getCartItems(user.id, jwt)
+        const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+        const storedJwt = sessionStorage.getItem('jwt');
+        console.log(`getCartItems triggert for user ${storedUser.username} with id ${storedUser.id}`)
           
-          setTotalCartItem(cartItemList_?.length)
-          setCartItemList(cartItemList_)
+            if (storedUser != null) {
+          
+            const cartItemList_ = await GlobalApi.getCartItems(storedUser.id, storedJwt)
+                
+            setTotalCartItem(cartItemList_?.length)
+            setCartItemList(cartItemList_)              
+        }
       }
     
     useEffect (() => {
@@ -112,12 +119,17 @@ function CheckOut() {
     
     useEffect(() => {
     
-        handlePayment()
-    
-        console.log('subtotal = ', subtotal)
+        if (subtotal > 0) {
+
+            console.log('subtotal = ', subtotal)
+            
+            handlePayment(subtotal)
+        
+        }
     }, [subtotal])
     
-    const handlePayment = () => {
+    const handlePayment = (subtotal) => {
+        console.log("amount: ", convertToSubcurrency(subtotal))
     
         fetch('/api/create-intent', {
             method: 'POST',
