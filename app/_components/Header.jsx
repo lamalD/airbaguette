@@ -212,6 +212,24 @@ function Header() {
             </div>   */}
         </div>
         <div className='flex flex-col md:flex-row gap-5 items-center justify-center md:justify-end'>
+            {!isLoggedIn? 
+                <Link href={'/sign-in'}>
+                    <Button>Login</Button>
+                </Link>
+                :
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <CircleUserRound className='h-10 w-10 p-0.5 bg-slate-100 text-primary rounded-full border border-primary'/>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>My Order</DropdownMenuItem> */}
+                        <DropdownMenuItem onClick={() => onSignOut()}>Logout</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            }
             {isLoggedIn &&
                 <Sheet>
                     <SheetTrigger asChild>
@@ -237,25 +255,6 @@ function Header() {
                     </SheetContent>
                 </Sheet>
             }
-            {!isLoggedIn? 
-                <Link href={'/sign-in'}>
-                    <Button>Login</Button>
-                </Link>
-                :
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <CircleUserRound className='h-10 w-10 p-0.5 bg-slate-100 text-primary rounded-full border border-primary'/>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>My Order</DropdownMenuItem> */}
-                        <DropdownMenuItem onClick={() => onSignOut()}>Logout</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            }
-
         </div>
     </div>
   )
