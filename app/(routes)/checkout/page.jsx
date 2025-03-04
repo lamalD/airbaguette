@@ -54,6 +54,8 @@ function Checkout() {
     }
   }, [])
 
+  console.log('checkout page loaded after first useEffect')
+
   useEffect (() => {
 
     if (!jwt) {
