@@ -1,7 +1,7 @@
 const { default: axios } = require("axios")
 
 const axiosClient = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL+'/api' 
+    baseURL: process.env.NEXT_PUBLIC_STRAPI_API_URL+'api' 
     // "http://localhost:1337/api",
 })
 
