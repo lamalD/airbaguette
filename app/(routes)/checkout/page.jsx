@@ -88,6 +88,7 @@ function Checkout() {
 }, [subtotal])
 
 const handlePayment = () => {
+    console.log("amount: ", convertToSubcurrency(subtotal))
 
     fetch('/api/create-intent', {
         method: 'POST',

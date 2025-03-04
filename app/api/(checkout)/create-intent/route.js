@@ -5,6 +5,8 @@ export async function POST(request) {
   try {
     const { amount } = await request.json();
 
+    console.log('amount for api: ', amount)
+
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
       currency: "eur",
