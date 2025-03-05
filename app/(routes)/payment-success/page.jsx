@@ -100,8 +100,17 @@ function SuccessPage() {
           // Update Order
           const updateResponse = await GlobalApi.updateOrder(documentId, payload, storedJwt);
           console.log('handleCheckout resp: ', updateResponse.data.data);
-          toast.success('Order placed confirmed');
+          toast.success('Bestelling geplaatst');
   
+          // Send confirmation email
+          await fetch('/send-order-confirmation', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email: email, amount: amount }),
+          })
+
           // Optionally handle payment here
           // const orderId = updateResponse.data.data.documentId;
           // handlePayment(orderId);
@@ -140,13 +149,19 @@ function SuccessPage() {
   return (
     <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-blue-500">
       <div className="mb-10">
-        <h1 className="text-4xl font-extrabold mb-2">Order successfully placed!</h1>
-        <h2 className="text-2xl">Payment received</h2>
+          <h1 className="text-4xl font-extrabold mb-2">Order successfully placed!</h1>
+          <h2 className="text-2xl">Payment received</h2>
 
-        <div className="bg-white p-2 rounded-md text-blue-500 mt-5 text-4xl font-bold">
-          € {amount}
+          <div className="bg-white p-2 rounded-md text-blue-500 mt-5 text-4xl font-bold">
+              € {amount}
+          </div>
+
+          <div className="mt-5 text-lg">
+              <p>Thank you, {firstName} {lastName}, for your order!</p>
+              <p>Your order will be delivered on: {deliveryDate}</p>
+              <p>If you have any questions, please contact us at {email}.</p>
+          </div>
         </div>
-      </div>
     </main>
   )
 }
