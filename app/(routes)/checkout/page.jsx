@@ -131,23 +131,7 @@ const handlePayment = (subtotal) => {
               currency: 'eur',
             }}
           >
-
-          <CheckOut />
-          {/* <div className='flex flex-col items-center justify-center gap-4 w-full'>
-            <div className='flex mx-10 border'>
-                <h2 className='p-3 bg-gray-200 font-bold text-center'>Total Cart ({totalCartItem})</h2>
-                <div className='p-4 flex flex-col gap-4'>
-                    <h2 className='font-bold flex justify-between'>Subtotal : <span>€ {subtotal.toFixed(2)}</span></h2>
-                    <hr />
-                    <h2 className='flex justify-between'>Delivery : <span>€ 0</span></h2>
-                    <h2 className='flex justify-between'>Total : <span>€ {(subtotal).toFixed(2)}</span></h2>
-                </div>
-            </div>
-            <div className='flex-1'>
-                {clientSecret&& <PaymentElement />}
-            </div>
-                <Button className=''>Payment</Button>
-          </div>   */}
+            <CheckOut />
           </Elements>}
       </div>
     </div>

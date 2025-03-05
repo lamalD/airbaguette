@@ -101,7 +101,9 @@ function CheckOut() {
             const cartItemList_ = await GlobalApi.getCartItems(storedUser.id, storedJwt)
                 
             setTotalCartItem(cartItemList_?.length)
-            setCartItemList(cartItemList_)              
+            setCartItemList(cartItemList_)  
+            
+            console.log('CartItemList: ', cartItemList_)
         }
       }
     
@@ -201,10 +203,11 @@ function CheckOut() {
       }
 
   return (
-    <div className='flex flex-row items-start justify-between space-x-10 gap-4 mx-10'>
+    <div className='flex flex-col 
+                    md:flex-row md:items-start md:justify-between md:space-x-10 md:gap-4 md:mx-10'>
             <div className='flex-1 flex-col items-center justify-between w-full h-full rounded-md '>
                 <div className='flex-1 bg-gray-200'>
-                    <h2 className='p-3 bg-gray-200 font-bold text-left'>Total Cart ({totalCartItem})</h2>
+                    <h2 className='p-3 bg-gray-200 font-bold text-left'>Totale Bestelling ({totalCartItem})</h2>
 
                 </div>
                 <div className='p-4 flex-1 flex-col gap-4'>
