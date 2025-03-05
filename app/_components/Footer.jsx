@@ -18,7 +18,7 @@ function Footer() {
                         width={150} 
                         height={100} 
                     />
-                    <div className='flex text-2xl md:text-5xl lg:text-6xl'>
+                    <div className='flex flex-col items-start text-2xl md:text-5xl lg:text-6xl'>
                         <h2 className='text-secondary'>AIR</h2>
                         <h2 className='text-primary'>BAGUETTE</h2>
                     </div>
