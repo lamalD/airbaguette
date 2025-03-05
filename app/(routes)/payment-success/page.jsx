@@ -101,15 +101,6 @@ function SuccessPage() {
           const updateResponse = await GlobalApi.updateOrder(documentId, payload, storedJwt);
           console.log('handleCheckout resp: ', updateResponse.data.data);
           toast.success('Bestelling geplaatst');
-  
-          // Send confirmation email
-          await fetch('/send-order-confirmation', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ email: email, amount: amount }),
-          })
 
           // Optionally handle payment here
           // const orderId = updateResponse.data.data.documentId;
