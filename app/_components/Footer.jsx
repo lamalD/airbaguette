@@ -9,7 +9,7 @@ function Footer() {
             <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6 lg:px-8">
                 <ul className="mt-2 flex flex-wrap justify-center gap-6  mb-10 md:gap-8 lg:gap-12">
                     <li>
-                        <a className="text-secondary transition hover:text-primary/75" href="mailto:youremail@example.com"> Contacteer Ons </a>
+                        <a className="text-secondary transition hover:text-primary/75" href="mailto:contact@airbaguette.be"> Contacteer Ons </a>
                     </li>
                     {/* <li>
                         <a className="text-secondary transition hover:text-primary/75" href="#"> Careers </a>
