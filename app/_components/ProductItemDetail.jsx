@@ -84,7 +84,7 @@ function ProductItemDetail({product, onClose}) {
             height={300}
             className='hidden md:flex bg-slate-200 p-5 h-[320px] w-[300px] object-contain rounded-md'
         />
-        <div className='flex flex-col gap-3'>
+        <div className='flex flex-col gap-3 text-left'>
             <div>
                 <h2 className='text-2xl font-bold'>{product.name}</h2>
                 <h2 className='text-sm text-left text-gray-500'>{formatDescription(product.description)}</h2>
@@ -93,7 +93,7 @@ function ProductItemDetail({product, onClose}) {
                 {product.sellingPrice && <h2 className='font-bold text-3xl'>€ {product.sellingPrice}</h2>}
                 <h2 className={`font-bold text-3xl ${product.sellingPrice&&'line-through text-slate-200'}`}>€ {product.mrp}</h2>
             </div>
-            <h2 className='font-bold text-lg'>Hoeveelheid ( {product.itemQuantityType} )</h2>
+            <h2 className='font-bold text-left text-lg'>Hoeveelheid ( {product.itemQuantityType} )</h2>
             <div className='flex flex-col items-baseline gap-3'>
                 <div className='flex gap-3 items-center'>
                     <div className='my-2 flex gap-5 items-center justify-between'>
