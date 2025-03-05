@@ -63,6 +63,16 @@ function ProductItemDetail({product}) {
         })
     }
 
+    // Function to format the description
+    const formatDescription = (description) => {
+        return description.split('-').map(item => item.trim()).filter(item => item).map((item, index) => (
+            <span key={index}>
+                - {item}
+                {index < description.split('-').length - 1 && <br />} {/* Add a line break except after the last item */}
+            </span>
+        ));
+    };
+
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 p-7 bg-white text-black'>
         <Image 
@@ -75,7 +85,7 @@ function ProductItemDetail({product}) {
         <div className='flex flex-col gap-3'>
             <div>
                 <h2 className='text-2xl font-bold'>{product.name}</h2>
-                <h2 className='text-sm text-gray-500'>{product.description}</h2>
+                <h2 className='text-sm text-gray-500'>{formatDescription(product.description)}</h2>
             </div>
             <div className='flex gap-6'>
                 {product.sellingPrice && <h2 className='font-bold text-3xl'>€ {product.sellingPrice}</h2>}
