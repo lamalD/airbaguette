@@ -211,7 +211,7 @@ function CheckOut() {
                     {cartItemList && 
                         <ul className='p-3'>
                             {cartItemList.map(item => (
-                                    <li key={item.id} className='flex items-center mb-2'>
+                                    <li key={item.id} className='flex flex-col md:flex-row items-center mb-2'>
                                         <div>
                                             <p className='font-bold'>{item.name}</p>
                                             <p className='text-gray-600'>Quantity: {item.quantity}</p>
