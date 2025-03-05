@@ -222,7 +222,7 @@ function CheckOut() {
                         </ul>
                     }
                 </div>
-                <div className='p-4 flex-1 flex-col gap-4'>
+                <div className='p-4 flex-1 flex-col gap-4 space-y-2'>
                     <h2 className='font-bold flex justify-between text-xs md:text-xl'>Subtotaal <span>€ {subtotal.toFixed(2)}</span></h2>
                     <hr />
                     <h2 className='flex justify-between text-green-800 font-medium text-xs md:text-xl'>Levering <span>GRATIS</span></h2>
