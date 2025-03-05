@@ -208,7 +208,20 @@ function CheckOut() {
             <div className='flex-1 flex-col items-center justify-between w-full h-full rounded-md '>
                 <div className='flex-1 bg-gray-200'>
                     <h2 className='p-3 bg-gray-200 font-bold text-left'>Totale Bestelling ({totalCartItem})</h2>
-
+                    {cartItemList && 
+                        <ul className='p-3'>
+                            {cartItemList.map(item => (
+                                    <li key={item.id} className='flex items-center mb-2'>
+                                        <div>
+                                            <p className='font-bold'>{item.name}</p>
+                                            <p className='text-gray-600'>Quantity: {item.quantity}</p>
+                                            <p className='text-gray-600'>Amount: €{item.amount}</p>
+                                        </div>
+                                    </li>
+                                )
+                            )}
+                        </ul>
+                    }
                 </div>
                 <div className='p-4 flex-1 flex-col gap-4'>
                     <h2 className='font-bold flex justify-between text-xs md:text-xl'>Subtotaal <span>€ {subtotal.toFixed(2)}</span></h2>
@@ -300,7 +313,13 @@ function CheckOut() {
                         disabled={!stripe || loading || !date}
                         className='text-white w-full p-5 mt-10 bg-black rounded-md font-bold disabled:opacity-50 disabled:animate-pulse'
                     >
-                        {!loading ? `Pay €${subtotal.toFixed(2)}` : 'Processing'}
+                        {
+                            !loading ? 
+                                // `Betaal €${subtotal.toFixed(2)}`
+                                'Betalen' 
+                            : 
+                                'Processing'
+                        }
                     </Button>
                 </div>  
             </form>
