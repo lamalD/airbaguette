@@ -170,7 +170,7 @@ function Header() {
                     width={150} 
                     height={100} 
                 />
-                <div className='text-3xl md:text-5xl lg:text-6xl'>
+                <div className='hidden sm:flex text-3xl md:text-5xl lg:text-6xl'>
                     <h2 className='text-secondary'>AIR</h2>
                     <h2 className='text-primary'>BAGUETTE</h2>
                 </div>

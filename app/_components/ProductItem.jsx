@@ -28,16 +28,18 @@ function ProductItem({product}) {
     };
 
   return (
-    <div className='p-2 md:p-5 flex flex-col md:flex-row md:space-x-8 items-center justify-center md:justify-between border rounded-lg min-w-[200px] md:min-w-[400px] hover:scale-105 hover:shadow-md hover:ml-3 transition-all ease-in-out scrollbar-hide'>
+    <div className='p-2 flex flex-row items-start justify-between border rounded-lg min-w-[200px] 
+                    md:p-5 md:space-x-8 md:min-w-[400px] 
+                    hover:scale-105 hover:shadow-md hover:ml-3 transition-all ease-in-out scrollbar-hide'>
         <Image 
             src={product.image?.url} 
             alt='image' 
-            className='object-contain' 
+            className='hidden md:flex object-contain' 
             width={150} 
             height={150}
         />
         <div className='flex flex-col justify-start items-start space-y-2 p-2 w-[50%]'>
-            <h2 className='font-bold text-2xl text-start'>{product.name}</h2>
+            <h2 className='font-bold text-sm sm:text-lg md:text-2xl text-start'>{product.name}</h2>
             {product.description ? 
                 (
                     <p className='ml-2 text-xs text-slate-300'>{formatDescription(product.description)}</p>
@@ -49,7 +51,7 @@ function ProductItem({product}) {
                 )
             }
         </div>
-        <div className='flex flex-col justify-center items-center gap-4'>
+        <div className='flex flex-col justify-center items-start gap-4'>
             <div className='flex flex-row gap-3'>
                 {product.sellingPrice && <h2 className='font-bold text-lg md:text-2xl'>€ {product.sellingPrice}</h2>}
                 <h2 className={`font-bold text-lg md:text-2xl ${product.sellingPrice&&'line-through text-red-500'}`}>€ {product.mrp}</h2>
@@ -57,9 +59,16 @@ function ProductItem({product}) {
 
             <Dialog>
                 <DialogTrigger asChild>
-                    <div className='flex flex-row items-center justify-center p-2 border rounded-lg bg-blue-500 text-white hover:cursor-pointer hover:bg-slate-200 hover:text-black ease-in-out'>
-                        <Plus size={24} strokeWidth={3}/>
-                        <ShoppingBasket size={48} />
+                    <div className='flex flex-row items-center justify-center px-1.5 py-0.5 md:p-2 border rounded-lg bg-primary text-white hover:cursor-pointer hover:bg-secondary hover:text-primary ease-in-out'>
+                        <Plus 
+                            size={24} 
+                            strokeWidth={3}
+                            className='w-6'
+                        />
+                        <ShoppingBasket 
+                            size={48}
+                            className='w-6'
+                        />
                     </div>
                 </DialogTrigger>
                 <DialogContent>

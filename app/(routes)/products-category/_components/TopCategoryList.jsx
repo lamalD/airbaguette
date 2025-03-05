@@ -20,7 +20,7 @@ function TopCategoryList({categoryList, selectedCategory}) {
                             height={100}
                             className='group-hover:scale-110 transition-all ease-in-out'
                         />
-                        <h2 className='group-hover:scale-110 transition-all ease-in-out'>{category.name}</h2>
+                        <h2 className='hidden sm:flex group-hover:scale-110 transition-all ease-in-out'>{category.name}</h2>
                     </Link>
                 ))
             }
