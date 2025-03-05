@@ -211,17 +211,17 @@ function CheckOut() {
 
                 </div>
                 <div className='p-4 flex-1 flex-col gap-4'>
-                    <h2 className='font-bold flex justify-between'>Subtotal <span>€ {subtotal.toFixed(2)}</span></h2>
+                    <h2 className='font-bold flex justify-between text-xs md:text-xl'>Subtotaal <span>€ {subtotal.toFixed(2)}</span></h2>
                     <hr />
-                    <h2 className='flex justify-between text-green-800 font-medium'>Delivery <span>FREE</span></h2>
-                    <h2 className='font-bold flex justify-between'>Total <span>€ {(subtotal).toFixed(2)}</span></h2>
+                    <h2 className='flex justify-between text-green-800 font-medium text-xs md:text-xl'>Levering <span>GRATIS</span></h2>
+                    <h2 className='font-bold flex justify-between text-xs md:text-xl'>Totaal <span>€ {(subtotal).toFixed(2)}</span></h2>
                 </div>
             </div>
             <form onSubmit={handleSubmit} className='flex bg-slate-100 p-4 rounded-md'>
                 <div className='flex-1 flex-col items-center justify-center'>
                     <div className='flex flex-col items-center justify-between mb-10 space-y-2'>
                         <div className='flex flex-col gap-2 mb-2'>
-                            <h2 className='text-left font-bold'>Select Delivery Date</h2>
+                            <h2 className='text-left font-bold'>Datum voor levering</h2>
                             <Popover className='' open={isOpen} onOpenChange={setIsOpen}>
                                 <PopoverTrigger asChild>
                                     <Button
@@ -233,7 +233,7 @@ function CheckOut() {
                                     onClick={() => setIsOpen(true)}
                                     >
                                     <CalendarIcon />
-                                    {date ? format(date, "dd/MM/yyyy") : <span>Pick a date</span>}
+                                    {date ? format(date, "dd/MM/yyyy") : <span>Selecteer een datum</span>}
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
@@ -247,8 +247,8 @@ function CheckOut() {
                                             <SelectValue placeholder="Select" />
                                         </SelectTrigger>
                                         <SelectContent position="popper">
-                                            <SelectItem value="0">Today</SelectItem>
-                                            <SelectItem value="1">Tomorrow</SelectItem>
+                                            <SelectItem value="1">Morgen</SelectItem>
+                                            <SelectItem value="2">Overmorgen</SelectItem>
                                             {/* <SelectItem value="3">In 3 days</SelectItem> */}
                                             {/* <SelectItem value="7">In a week</SelectItem> */}
                                         </SelectContent>
@@ -267,12 +267,12 @@ function CheckOut() {
                         <Separator />
                         <div className='flex flex-col w-full gap-2 py-2'>
                             <Input 
-                                placeholder='Last Name' 
+                                placeholder='Naam' 
                                 className='bg-white'
                                 onChange = {(e) => setLastName(e.target.value)}
                             />
                             <Input 
-                                placeholder='First Name' 
+                                placeholder='Voornaam' 
                                 className='bg-white'
                                 onChange = {(e) => setFirstName(e.target.value)}
                             />
@@ -284,7 +284,7 @@ function CheckOut() {
                             />
                             <Input 
                                 type='tel' 
-                                placeholder='Phone Number' 
+                                placeholder='Tel. Nummer' 
                                 className='bg-white'
                                 onChange = {(e) => setPhone(e.target.value)}
                             />
