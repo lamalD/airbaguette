@@ -1,6 +1,6 @@
 
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
     Dialog,
@@ -16,6 +16,12 @@ import { Plus, ShoppingBasket } from 'lucide-react'
 function ProductItem({product}) {
 
     console.log('Product: ', product)
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+    const closeDialog = () => {
+        setIsDialogOpen(false);
+    }
 
     // Function to format the description
     const formatDescription = (description) => {
@@ -75,7 +81,7 @@ function ProductItem({product}) {
                     <DialogHeader>
                     <DialogTitle></DialogTitle>
                         <DialogDescription>
-                            <ProductItemDetail product={product}/>
+                            <ProductItemDetail product={product} onClose={closeDialog}/>
                         </DialogDescription>
                     </DialogHeader>
                 </DialogContent>

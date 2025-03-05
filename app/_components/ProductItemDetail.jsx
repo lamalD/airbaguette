@@ -9,7 +9,7 @@ import GlobalApi from '../_utils/GlobalApi'
 import { toast } from 'sonner'
 import { UpdateCartContext } from '../_context/UpdateCartContext'
 
-function ProductItemDetail({product}) {
+function ProductItemDetail({product, onClose}) {
 
     console.log(product)
 
@@ -54,13 +54,15 @@ function ProductItemDetail({product}) {
         console.log(data)
         GlobalApi.addToCart(data, jwt).then((resp) => {
             console.log(resp)
-            toast('added to cart')
+            toast('Toegevoegd aan winkelmandje')
             setUpdateCart(!updateCart)
             setLoader(false)
         }, (e) => {
-            toast('Error while adding into cart', e)
+            toast('Er is iets misgegaan ...', e)
             setLoader(false)
         })
+
+        onClose()
     }
 
     // Function to format the description
