@@ -64,7 +64,7 @@ function ProductItem({product}) {
                 <h2 className={`font-bold text-lg md:text-2xl ${product.sellingPrice&&'line-through text-red-500'}`}>€ {product.mrp}</h2>
             </div>
 
-            <Dialog>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
                     <div className='flex flex-row items-center justify-center px-1.5 py-0.5 md:p-2 border rounded-lg bg-primary text-white hover:cursor-pointer hover:bg-secondary hover:text-primary ease-in-out'>
                         <Plus 
