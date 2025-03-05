@@ -35,20 +35,20 @@ function SuccessPage() {
   const date = searchParams.get('dd')
   // const docId = searchParams.get('id')
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-        const storedUser  = JSON.parse(sessionStorage.getItem('user'));
-        const storedJwt = sessionStorage.getItem('jwt');
-        setUser (storedUser );
-        setJwt(storedJwt);
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //       const storedUser  = JSON.parse(sessionStorage.getItem('user'));
+  //       const storedJwt = sessionStorage.getItem('jwt');
+  //       setUser (storedUser );
+  //       setJwt(storedJwt);
+  //   }
+  // }, [])
 
   useEffect (() => {
     const storedJwt = sessionStorage.getItem('jwt')
-      if (storedJwt) {
-        router.push('/sign-in')
-      }
+      // if (storedJwt) {
+      //   router.push('/sign-in')
+      // }
 
       completeOrder()
   }, [])
@@ -65,11 +65,11 @@ function SuccessPage() {
   console.log('DD: ', deliveryDate)
 
   const completeOrder = async () => {
-    const storedUser  = JSON.parse(sessionStorage.getItem('user'))
-    const storedJwt = sessionStorage.getItem('jwt')
-    if (!storedJwt) {
-      router.push('/sign-in')
-    } else {
+    // const storedUser  = JSON.parse(sessionStorage.getItem('user'))
+    // const storedJwt = sessionStorage.getItem('jwt')
+    // if (!storedJwt) {
+    //   router.push('/sign-in')
+    // } else {
 
         const payload = {
             data : {
@@ -134,7 +134,7 @@ function SuccessPage() {
           console.error('Error during order completion:', error);
           toast.error('An error occurred while completing the order');
       }
-    }
+    // }
   }
 
   return (
