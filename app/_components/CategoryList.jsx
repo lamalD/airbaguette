@@ -11,7 +11,7 @@ function CategoryList({categoryList}) {
         <div className='flex items-end justify-center gap-2 md:gap-6 px-2'>
             {categoryList.map((category, index) => (
                     <Link
-                        href={category.name} 
+                        href={`/products-category/${category.name}`}
                         key={index} 
                         className={`flex flex-col lg:flex-row gap-4 p-2 items-center border-2 border-primary rounded-md cursor-pointer hover:bg-slate-200 hover:border-secondary hover:text-primary group`}
                     >
