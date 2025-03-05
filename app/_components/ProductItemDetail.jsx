@@ -82,12 +82,12 @@ function ProductItemDetail({product, onClose}) {
             alt=''
             width={300}
             height={300}
-            className='bg-slate-200 p-5 h-[320px] w-[300px] object-contain rounded-md'
+            className='hidden md:flex bg-slate-200 p-5 h-[320px] w-[300px] object-contain rounded-md'
         />
         <div className='flex flex-col gap-3'>
             <div>
                 <h2 className='text-2xl font-bold'>{product.name}</h2>
-                <h2 className='text-sm text-gray-500'>{formatDescription(product.description)}</h2>
+                <h2 className='text-sm text-left text-gray-500'>{formatDescription(product.description)}</h2>
             </div>
             <div className='flex gap-6'>
                 {product.sellingPrice && <h2 className='font-bold text-3xl'>€ {product.sellingPrice}</h2>}
