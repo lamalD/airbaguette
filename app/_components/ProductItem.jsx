@@ -45,7 +45,7 @@ function ProductItem({product}) {
             width={150} 
             height={150}
         />
-        <div className='flex flex-col justify-start items-start space-y-2 p-2 w-[50%]'>
+        <div className='flex flex-col justify-start items-start space-y-2 p-2 w-[75%]'>
             <h2 className='font-bold text-sm sm:text-lg md:text-2xl text-start'>{product.name}</h2>
             {product.description ? 
                 (
