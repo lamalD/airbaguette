@@ -13,7 +13,7 @@ function CategoryList({categoryList}) {
                     <Link
                         href={category.name} 
                         key={index} 
-                        className={`flex flex-col lg:flex-row gap-4 p-2 items-center border-2 border-primary rounded-md cursor-pointer hover:bg-slate-200 hover:border-secondary hover:text-primary group ${selectedCategory===category.name&&'bg-slate-200 border-secondary text-primary'}`}
+                        className={`flex flex-col lg:flex-row gap-4 p-2 items-center border-2 border-primary rounded-md cursor-pointer hover:bg-slate-200 hover:border-secondary hover:text-primary group`}
                     >
                         <Image 
                             src={category.icon[0]?.url}
