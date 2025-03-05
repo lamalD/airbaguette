@@ -91,7 +91,7 @@ function ProductItemDetail({product}) {
                 {product.sellingPrice && <h2 className='font-bold text-3xl'>€ {product.sellingPrice}</h2>}
                 <h2 className={`font-bold text-3xl ${product.sellingPrice&&'line-through text-slate-200'}`}>€ {product.mrp}</h2>
             </div>
-            <h2 className='font-bold text-lg'>Quantity ({product.itemQuantityType})</h2>
+            <h2 className='font-bold text-lg'>Hoeveelheid ( {product.itemQuantityType} )</h2>
             <div className='flex flex-col items-baseline gap-3'>
                 <div className='flex gap-3 items-center'>
                     <div className='my-2 flex gap-5 items-center justify-between'>
@@ -118,11 +118,14 @@ function ProductItemDetail({product}) {
                 </div>
                 <Button disabled={loader} className='flex gap-3' onClick={() => addToCart()}>
                     <ShoppingBasket />
-                    {loader ? <LoaderIcon className='animated-spin'/>: 'Add to Cart'}
+                    {loader ? <LoaderIcon className='animated-spin'/>: 'Bestellen'}
                 </Button>
             </div>
             <div>
-                <h2 className='font-bold'><span>Category:</span>{product.category.name}</h2>
+                <h2 className='font-bold bg-secondary text-primary rounded-md'>
+                    {/* <span>Category:</span> */}
+                    {product.category.name}
+                </h2>
             </div>
         </div>
     </div>
