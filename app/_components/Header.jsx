@@ -240,16 +240,16 @@ function Header() {
                     </SheetTrigger>
                     <SheetContent>
                         <SheetHeader>
-                        <SheetTitle className='bg-primary text-white font-bold text-lg p-2'>My Cart</SheetTitle>
+                        <SheetTitle className='bg-primary text-white font-bold text-lg p-2'>Mijn Bestelling</SheetTitle>
                         <SheetDescription>
                             <CartItemList cartItemList={cartItemList} onDeleteItem={onDeleteItem} />
                         </SheetDescription>
                         </SheetHeader>
                     <SheetClose asChild>
-                        <div className='absolute w-[90%] bottom-6 flex flex-col'>
-                            <h2 className='text-lg font-bold flex justify-between'>Subtotal <span>€ {subtotal.toFixed(2)}</span></h2>
+                        <div className='absolute w-[90%] bottom-6 flex flex-col items-center'>
+                            <h2 className='text-lg font-bold flex justify-between'>Subtotaal <span>€ {subtotal.toFixed(2)}</span></h2>
                             {/* <Button onClick={() => router.push(jwt ? '/checkout' : '/sign-in')}>Checkout</Button> */}
-                            <Button onClick={() => handleCheckout()}>Checkout</Button>
+                            <Button onClick={() => handleCheckout()}>Bestellen</Button>
                         </div>
                     </SheetClose>
                     </SheetContent>

@@ -20,7 +20,7 @@ function CartItemList({cartItemList, onDeleteItem}) {
                             alt={cart.name} 
                             width={70} 
                             height={70}
-                            className='border p-2'
+                            className='border rounded-md p-2'
                         />
                         <div>
                             <h2 className='font-bold'>{cart.name}</h2>
