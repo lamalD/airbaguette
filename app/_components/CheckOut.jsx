@@ -214,7 +214,7 @@ function CheckOut() {
                                     <li key={item.id} className='flex items-center mb-2'>
                                         <div className='flex flex-row justify-between w-full'>
                                             <p className='text-black text-xs md:text-lg'>{item.quantity} x {item.name}</p>
-                                            <p className='text-black text-xs md:text-lg'>€ {item.amount}</p>
+                                            <p className='text-black text-xs md:text-lg'>€ {(item.amount).toFixed(2)}</p>
                                         </div>
                                     </li>
                                 )
