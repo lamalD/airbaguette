@@ -65,8 +65,8 @@ function SuccessPage() {
   console.log('DD: ', deliveryDate)
 
   const completeOrder = async () => {
-    // const storedUser  = JSON.parse(sessionStorage.getItem('user'))
-    // const storedJwt = sessionStorage.getItem('jwt')
+    const storedUser  = JSON.parse(sessionStorage.getItem('user'))
+    const storedJwt = sessionStorage.getItem('jwt')
     // if (!storedJwt) {
     //   router.push('/sign-in')
     // } else {
@@ -140,17 +140,17 @@ function SuccessPage() {
   return (
     <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-blue-500">
       <div className="mb-10">
-          <h1 className="text-4xl font-extrabold mb-2">Order successfully placed!</h1>
-          <h2 className="text-2xl">Payment received</h2>
+          <h1 className="text-4xl font-extrabold mb-2">Wij hebben uw bestelling goed ontvangen</h1>
+          <h2 className="text-2xl">Bedankt!</h2>
 
-          <div className="bg-white p-2 rounded-md text-blue-500 mt-5 text-4xl font-bold">
+          {/* <div className="bg-white p-2 rounded-md text-blue-500 mt-5 text-4xl font-bold">
               € {amount}
-          </div>
+          </div> */}
 
           <div className="mt-5 text-lg">
-              <p>Thank you, {firstName} {lastName}, for your order!</p>
-              <p>Your order will be delivered on: {deliveryDate}</p>
-              <p>If you have any questions, please contact us at {email}.</p>
+              <p>Bedankt, {firstName} , voor je bestelling!</p>
+              <p>Wij bezorgen je bestelling op {deliveryDate} om 11:30 in de break room van Brussels Airlines Training Center.</p>
+              <p>Voor al uw vragen/opmerkingen/suggesties, kan u ons steeds contacteren via <a href='mailto:contact@airbaguette.be'>contact@airbaguette.be</a>.</p>
           </div>
         </div>
     </main>
