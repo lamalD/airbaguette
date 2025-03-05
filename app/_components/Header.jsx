@@ -140,7 +140,7 @@ function Header() {
 
             GlobalApi.createOrder(payload, jwt).then(resp => {
                 console.log('handleCheckout resp: ', resp.data.data)
-                toast.success('Order placed, next step payment')
+                // toast.success('Order placed, next step payment')
 
                 const orderId = resp.data.data.documentId
 

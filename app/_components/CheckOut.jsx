@@ -26,6 +26,7 @@ import convertToSubcurrency from '@/lib/convertToSubcurrency'
 import GlobalApi from '../_utils/GlobalApi'
 import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
+import { toast } from 'sonner'
 
 function CheckOut() {
 
@@ -70,6 +71,7 @@ function CheckOut() {
             setIsOpen(false)
         } else {
             console.log('Selected date is out of range')
+            toast.error('Datum niet beschikbaar voor bestelling!')
         }
     }
 
