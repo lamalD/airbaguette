@@ -246,7 +246,7 @@ function Header() {
                         </SheetDescription>
                         </SheetHeader>
                     <SheetClose asChild>
-                        <div className='absolute w-[90%] bottom-6 flex flex-col items-stretch'>
+                        <div className='absolute w-[80%] md:w-[90%] bottom-6 flex flex-col items-stretch'>
                             <h2 className='text-lg font-bold flex justify-between'>Subtotaal <span>€ {subtotal.toFixed(2)}</span></h2>
                             {/* <Button onClick={() => router.push(jwt ? '/checkout' : '/sign-in')}>Checkout</Button> */}
                             <Button onClick={() => handleCheckout()}>Bestellen</Button>
