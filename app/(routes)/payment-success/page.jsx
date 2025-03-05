@@ -136,6 +136,7 @@ function SuccessPage() {
       }
     }
   }
+
   return (
     <main className="max-w-6xl mx-auto p-10 text-white text-center border m-10 rounded-md bg-blue-500">
       <div className="mb-10">
@@ -153,7 +154,7 @@ function SuccessPage() {
 
 // export default SuccessPage
 
-// Wrap the SuccessPage component in a Susp ense boundary
+// Wrap the SuccessPage component in a Suspense boundary
 
 export default function WrappedSuccessPage() {
   return (
