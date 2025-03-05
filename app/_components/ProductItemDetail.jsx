@@ -122,7 +122,7 @@ function ProductItemDetail({product}) {
                 </Button>
             </div>
             <div>
-                <h2 className='font-bold bg-secondary text-primary rounded-md m-2 w-fit'>
+                <h2 className='font-bold bg-secondary text-primary rounded-md p-2 w-fit'>
                     {/* <span>Category:</span> */}
                     {product.category.name}
                 </h2>
