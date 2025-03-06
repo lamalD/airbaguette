@@ -1,5 +1,6 @@
 'use client'
 
+import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from "@/components/ui/sonner";
 import Header from "./_components/Header";
 import "./globals.css";
@@ -23,13 +24,14 @@ export default function RootLayout({ children }) {
   const [updateCart, setUpdateCart] = useState(false)
 
   return (
-    <html lang="en">
+    <html lang="nl">
       <body
         className={orbitron.className}
       >
         <UpdateCartContext.Provider value={{updateCart, setUpdateCart}}>
         {showHeader&&<Header />}
         {children}
+        <Analytics />
         <Toaster />
         </UpdateCartContext.Provider>
       </body>
