@@ -68,6 +68,7 @@ function CheckOut() {
     const handleDateSelect = (selectedDate) => {
         if (isDateSelectable(selectedDate)) {
             setDate(selectedDate)
+            console.log("Selected date:", selectedDate)
             setIsOpen(false)
         } else {
             console.log('Selected date is out of range')
@@ -167,11 +168,13 @@ function CheckOut() {
             return;
           }
       
+          const formattedDate = date ? format(date, "yyyy-MM-dd") : ""
+
           const { error } = await stripe.confirmPayment({
             elements,
             clientSecret,
             confirmParams: {
-              return_url: `https://www.airbaguette.be/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${date}&id=${cartItemList.documentId}`,
+              return_url: `https://www.airbaguette.be/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${formattedDate}&id=${cartItemList.documentId}`,
             },
             
           });
