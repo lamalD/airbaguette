@@ -6,6 +6,8 @@ import Link from 'next/link'
 
 function CategoryList({categoryList}) {
     
+    console.log('CategoryList: ', categoryList)
+
   return (
     <div className='mt-5'>
         <div className='flex items-end justify-center gap-2 md:gap-6 px-2'>
