@@ -9,13 +9,13 @@ function CategoryList({categoryList}) {
     console.log('CategoryList: ', categoryList)
 
   return (
-    <div className='mt-5'>
+    <div className='flex md:hidden mt-5'>
         <div className='flex items-end justify-center gap-2 md:gap-6 px-2'>
             {categoryList.map((category, index) => (
                     <Link
                         href={`/products-category/${category.name}`}
                         key={index} 
-                        className={`flex flex-col lg:flex-row gap-4 p-2 items-center border-2 border-primary rounded-md cursor-pointer hover:bg-slate-200 hover:border-secondary hover:text-primary group`}
+                        className={`flex flex-col xl:flex-row gap-4 p-2 items-center w-[25%] xl:w-fit border-2 border-primary rounded-md cursor-pointer hover:bg-slate-200 hover:border-secondary hover:text-primary group`}
                     >
                         <Image 
                             src={category.icon[0]?.url}

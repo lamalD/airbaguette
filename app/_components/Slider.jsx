@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useRef, useState } from 'react'
 
 import {
     Carousel,
@@ -6,14 +8,20 @@ import {
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
-  } from "@/components/ui/carousel"
+} from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
 import Image from 'next/image'
   
 
 function Slider({sliderList}) {
+  
+
   return (
     <div>
-        <Carousel>
+        <Carousel 
+          plugins={[Autoplay({ delay: 10000 })]}
+          opts={{ loop: true, align: "center" }}
+        >
             <CarouselContent>
                 {sliderList.map((slider, index) => (
                     <CarouselItem key={index}>
@@ -27,8 +35,8 @@ function Slider({sliderList}) {
                 ))}
                 
             </CarouselContent>
-            <CarouselPrevious className='hidden md:flex' />
-            <CarouselNext className='hidden md:flex' />
+            <CarouselPrevious className='hidden md:flex md:pl-2' />
+            <CarouselNext className='hidden md:flex md:pr-2' />
         </Carousel>
 
     </div>

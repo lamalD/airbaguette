@@ -11,6 +11,7 @@ const getCategoryList = () => axiosClient.get('/categories?populate=*').then(res
 })
 
 const getSliders = () => axiosClient.get('/sliders?populate=*').then(resp => {return(resp.data.data)})
+const getPromoSliders = () => axiosClient.get('/sliders-promo?populate=*').then(resp => {return(resp.data.data)})
 
 const getAllProducts = () => axiosClient.get('/products?populate=*').then(resp => {return(resp.data.data)})
 const getProductsByCategory = (category) => axiosClient.get(`/products?pagination[pageSize]=100&filters[category][name][$in]=${category}&populate=*`).then(resp => {
@@ -94,6 +95,7 @@ export default {
     getCategory,
     getCategoryList,
     getSliders,
+    getPromoSliders,
     getAllProducts,
     getProductsByCategory,
     registerUser,

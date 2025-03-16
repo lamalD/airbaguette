@@ -176,15 +176,15 @@ function Header() {
                 </div>
             </Link>
 
-                {/* <DropdownMenu>
+                <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <h2 className='hidden md:flex gap-2 items-center border rounded-full p-2 px-10 bg-slate-200 cursor-pointer'>
                             <LayoutGrid className='w-5 h-5'/>
-                            Category
+                            Categorieën
                         </h2>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>Browse Category</DropdownMenuLabel>
+                        <DropdownMenuLabel>Selecteer Categorie</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {categoryList.map((category, index) => (
                             <DropdownMenuItem 
@@ -193,7 +193,7 @@ function Header() {
                                 >
                                     <Link href={'/products-category/'+category.name} className='flex gap-4 items-center'>
                                             <Image 
-                                                src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL+category.icon[0]?.url} 
+                                                src={category.icon[0]?.url} 
                                                 alt='icon' 
                                                 width={50} 
                                                 height={50} 
@@ -204,7 +204,7 @@ function Header() {
                             ))
                         }
                     </DropdownMenuContent>
-                </DropdownMenu> */}
+                </DropdownMenu>
 
             {/* <div className='md:flex gap-3 items-center border rounded-full p-2 px-2 hidden'>
                 <Search />
