@@ -87,7 +87,7 @@ function ProductItemDetail({product, onClose}) {
         <div className='flex flex-col gap-3 text-left'>
             <div>
                 <h2 className='text-2xl font-bold'>{product.name}</h2>
-                <h2 className='text-sm text-left text-gray-500'>{formatDescription(product.description)}</h2>
+                <h2 className='text-sm text-left text-gray-500'>{product.description != null ? formatDescription(product.description) : ""}</h2>
             </div>
             <div className='flex gap-6'>
                 {product.sellingPrice && <h2 className='font-bold text-3xl'>€ {product.sellingPrice}</h2>}

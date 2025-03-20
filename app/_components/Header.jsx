@@ -176,35 +176,35 @@ function Header() {
                 </div>
             </Link>
 
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <h2 className='hidden md:flex gap-2 items-center border rounded-full p-2 px-10 bg-slate-200 cursor-pointer'>
-                            <LayoutGrid className='w-5 h-5'/>
-                            Categorieën
-                        </h2>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuLabel>Selecteer Categorie</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {categoryList.map((category, index) => (
-                            <DropdownMenuItem 
-                                    key={index} 
-                                    className='cursor-pointer hover:bg-slate-200'
-                                >
-                                    <Link href={'/products-category/'+category.name} className='flex gap-4 items-center'>
-                                            <Image 
-                                                src={category.icon[0]?.url} 
-                                                alt='icon' 
-                                                width={50} 
-                                                height={50} 
-                                            />
-                                            <h2 className=''>{category.name}</h2>
-                                    </Link>
-                                </DropdownMenuItem>
-                            ))
-                        }
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <h2 className='hidden md:flex gap-2 items-center border rounded-full p-2 px-10 bg-slate-200 cursor-pointer'>
+                        <LayoutGrid className='w-5 h-5'/>
+                        Categorieën
+                    </h2>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuLabel>Selecteer Categorie</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {categoryList.map((category, index) => (
+                        <DropdownMenuItem 
+                                key={index} 
+                                className='cursor-pointer hover:bg-slate-200'
+                            >
+                                <Link href={'/products-category/'+category.name} className='flex gap-4 items-center'>
+                                        <Image 
+                                            src={category.icon[0]?.url} 
+                                            alt='icon' 
+                                            width={50} 
+                                            height={50} 
+                                        />
+                                        <h2 className=''>{category.name}</h2>
+                                </Link>
+                            </DropdownMenuItem>
+                        ))
+                    }
+                </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* <div className='md:flex gap-3 items-center border rounded-full p-2 px-2 hidden'>
                 <Search />

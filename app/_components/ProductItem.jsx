@@ -24,15 +24,24 @@ function ProductItem({product}) {
         setIsDialogOpen(false);
     }
 
-    // Function to format the description
-    const formatDescription = (description) => {
-        return description.split('-').map(item => item.trim()).filter(item => item).map((item, index) => (
+// Function to format the description
+const formatDescription = (description) => {
+    // Check if the description is a valid string
+    console.log(description)
+    if (typeof description !== 'string' || description.trim() === '') {
+        return null; // or return <></> for an empty fragment
+    }
+
+    return description.split('-')
+        .map(item => item.trim())
+        .filter(item => item)
+        .map((item, index, array) => (
             <span key={index}>
                 - {item}
-                {index < description.split('-').length - 1 && <br />} {/* Add a line break except after the last item */}
+                {index < array.length - 1 && <br />} {/* Add a line break except after the last item */}
             </span>
-        ));
-    };
+    ))
+};
 
   return (
     <div className='p-2 flex flex-row items-start justify-between border rounded-lg min-w-[200px] 
@@ -62,7 +71,7 @@ function ProductItem({product}) {
                     )
                 }
             </h2>
-            {product.description ? 
+            {product.description != null ? 
                 (
                     <p className='ml-2 text-xs text-slate-300'>{formatDescription(product.description)}</p>
                 ) 
