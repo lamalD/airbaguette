@@ -73,16 +73,16 @@ function SuccessPage() {
 
         const payload = {
             data : {
-              totalOrderAmount: amount,
-              userId: storedUser.id,
-              username: storedUser.username,
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-              phone: phone,
+              // totalOrderAmount: amount,
+              // userId: storedUser.id,
+              // username: storedUser.username,
+              // firstName: firstName,
+              // lastName: lastName,
+              // email: email,
+              // phone: phone,
               paymentId: paymentId,
               paymentDone: true,
-              deliveryDate: deliveryDate,
+              // deliveryDate: deliveryDate,
               // orderItemList: cartItemList.map(item => ({
               //     product: item.product,
               //     amount: item.amount,

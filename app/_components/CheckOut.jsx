@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { addDays, format, isAfter, isBefore } from "date-fns"
+import { addDays, format, isAfter, isBefore, isSameDay } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
  
 import { cn } from "@/lib/utils"
@@ -59,20 +59,55 @@ function CheckOut() {
     const startDate = new Date()
     const endDate = addDays(new Date(), 7)
 
-    const isDateSelectable = (date) => {
+    // Set the cutoff time to 08:50 GMT+1 today
+    const setCutoffTime = () => {
+        const today = new Date();
+        today.setHours(9, 0, 0, 0); // Set to 08:50:00
+        // Adjust for GMT+1
+        today.setMinutes(today.getMinutes() + today.getTimezoneOffset() + 60);
+        return today;
+    }
+
+    const isDateSelectable = (selectedDate) => {
         // const today = new Date()
-        startDate.setHours(23, 59, 0, 0)
-        return !isBefore(date, startDate) && !isAfter(date, endDate)
+        // startDate.setHours(8, 50, 0, 0)
+        // console.log('startDate = ', startDate)
+        // return !isBefore(date, startDate) && !isAfter(date, endDate)
+        const cutoffTime = setCutoffTime();
+        console.log('Cutoff time = ', cutoffTime);
+
+        // Convert selectedDate to a Date object
+        const selectedDateTime = new Date(selectedDate);
+        console.log('Selected date time = ', selectedDateTime);
+
+        // Check if the selected date is before the cutoff time
+        if (isBefore(selectedDateTime, cutoffTime)) {
+            return true; // Selectable if before cutoff
+        }
+
+        if (isAfter(selectedDateTime, cutoffTime)) {
+            return false; // Not selectable if after cutoff
+        }
+
+        // Allow selection if the date is within the next 7 days
+        return !isAfter(selectedDateTime, endDate);
     }
 
     const handleDateSelect = (selectedDate) => {
-        if (isDateSelectable(selectedDate)) {
-            setDate(selectedDate)
-            console.log("Selected date:", selectedDate)
+
+        const now = new Date();
+        const selectedDateTime = new Date(selectedDate);
+        selectedDateTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+        console.log('sDT: ', selectedDateTime)
+
+        if (isDateSelectable(selectedDateTime)) {
+            setDate(selectedDateTime)
+            console.log("Selected date:", selectedDateTime)
             setIsOpen(false)
         } else {
             console.log('Selected date is out of range')
-            toast.error('Datum niet beschikbaar voor bestelling!')
+            console.log("Selected date:", selectedDateTime)
+            toast.error('Datum niet meer beschikbaar voor bestelling!')
         }
     }
 
@@ -147,6 +182,80 @@ function CheckOut() {
         .then((data) => setClientSecret(data.clientSecret))   
     }
 
+    const updateOrder = async (deliveryDate) => {
+        const storedUser  = JSON.parse(sessionStorage.getItem('user'))
+        const storedJwt = sessionStorage.getItem('jwt')
+
+        console.log('updateOrder triggert with DD: ', deliveryDate)
+        // if (!storedJwt) {
+        //   router.push('/sign-in')
+        // } else {
+    
+            const payload = {
+                data : {
+                //   totalOrderAmount: amount,
+                //   userId: storedUser.id,
+                //   username: storedUser.username,
+                  firstName: firstName,
+                  lastName: lastName,
+                  email: email,
+                  phone: phone,
+                //   paymentId: paymentId,
+                //   paymentDone: true,
+                  deliveryDate: deliveryDate,
+                  // orderItemList: cartItemList.map(item => ({
+                  //     product: item.product,
+                  //     amount: item.amount,
+                  //     quantity: item.quantity
+                  // }))
+                }
+            }
+    
+            try {
+              // Get Order ID
+              const orderResponse = await GlobalApi.getOrderId(storedUser.id, storedJwt);
+              const documentId = orderResponse.data.data[0].documentId;
+              console.log(documentId);
+      
+              // Update Order
+              const updateResponse = await GlobalApi.updateOrder(documentId, payload, storedJwt);
+              console.log('handleCheckout resp: ', updateResponse.data.data);
+            //   toast.success('Bestelling geplaatst');
+    
+              // Optionally handle payment here
+              // const orderId = updateResponse.data.data.documentId;
+              // handlePayment(orderId);
+      
+              // Get Cart IDs
+              const cartIdArrayResponse = await GlobalApi.getCartId(storedUser.id, storedJwt).then( resp => {
+                return resp.data.data
+              });
+              console.log('getCartId: ', cartIdArrayResponse);
+    
+              if (cartIdArrayResponse.length > 0) {
+    
+                // Extract documentIds from the cartIdArrayResponse
+                const documentIds = cartIdArrayResponse.map(item => item.documentId);
+                console.log('Document IDs to delete: ', documentIds);
+      
+                // Delete Shopping Cart items by documentId
+                for (const docId of documentIds) {
+                    await GlobalApi.deleteShoppingCart(docId, storedJwt);
+                    console.log(`Deleted item with documentId: ${docId}`);
+                }
+      
+                // Update cart state
+                setUpdateCart(!updateCart);
+                
+              }
+    
+              // router.push('/')
+          } catch (error) {
+              console.error('Error during order completion:', error);
+              toast.error('An error occurred while completing the order');
+        }
+    }
+
     const handleSubmit = async (event) => {
 
         event.preventDefault()
@@ -155,41 +264,38 @@ function CheckOut() {
         if (!stripe || !elements) {
           return;
         }
+      
+        const { error: submitError } = await elements.submit();
+    
+        if (submitError) {
+        setErrorMessage(submitError.message);
+        setLoading(false);
+        return;
+        }
+    
+        const formattedDate = date ? format(date, "yyyy-MM-dd") : ""
 
-        if (!stripe || !elements) {
-            return;
-          }
-      
-          const { error: submitError } = await elements.submit();
-      
-          if (submitError) {
-            setErrorMessage(submitError.message);
-            setLoading(false);
-            return;
-          }
-      
-          const formattedDate = date ? format(date, "yyyy-MM-dd") : ""
+        await updateOrder(formattedDate)
 
-          const { error } = await stripe.confirmPayment({
+        const { error } = await stripe.confirmPayment({
             elements,
             clientSecret,
             confirmParams: {
-              return_url: `https://www.airbaguette.be/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${formattedDate}&id=${cartItemList.documentId}`,
+                return_url: `https://www.airbaguette.be/payment-success?amount=${subtotal}&fn=${firstName}&ln=${lastName}&em=${email}&pn=${phone}&dd=${formattedDate}&id=${cartItemList.documentId}`,
             },
-            
-          });
-      
-          if (error) {
-            // This point is only reached if there's an immediate error when
-            // confirming the payment. Show the error to your customer (for example, payment details incomplete)
-            setErrorMessage(error.message);
-          } else {
-            // The payment UI automatically closes with a success animation.
-            // Your customer is redirected to your `return_url`.
-                        
-          }
-      
-          setLoading(false);
+        })
+    
+        if (error) {
+        // This point is only reached if there's an immediate error when
+        // confirming the payment. Show the error to your customer (for example, payment details incomplete)
+        setErrorMessage(error.message);
+        } else {
+        // The payment UI automatically closes with a success animation.
+        // Your customer is redirected to your `return_url`.
+                    
+        }
+    
+        setLoading(false);
     }
 
     if (!clientSecret || !stripe || !elements) {
