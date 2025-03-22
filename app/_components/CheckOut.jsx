@@ -82,11 +82,11 @@ function CheckOut() {
 
         // Check if the selected date is before the cutoff time
         if (isBefore(selectedDateTime, cutoffTime)) {
-            return false; // Selectable if before cutoff
+            return true; // Selectable if before cutoff
         }
 
         if (isAfter(selectedDateTime, cutoffTime)) {
-            return true; // Not selectable if after cutoff
+            return false; // Not selectable if after cutoff
         }
 
         // Allow selection if the date is within the next 7 days
