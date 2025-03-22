@@ -82,7 +82,8 @@ function CheckOut() {
 
         // Get today's date without time for comparison
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Set time to midnight
+        // today.setHours(0, 0, 0, 0); // Set time to midnight
+        console.log('today: ', today)
 
         // Check if the selected date is today
         if (selectedDateTime.setHours(0, 0, 0, 0) === today.getTime()) {
