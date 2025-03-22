@@ -90,7 +90,7 @@ function CheckOut() {
         }
 
         // Allow selection if the date is within the next 7 days
-        return !isAfter(selectedDateTime, endDate);
+        // return !isAfter(selectedDateTime, endDate);
     }
 
     const handleDateSelect = (selectedDate) => {
