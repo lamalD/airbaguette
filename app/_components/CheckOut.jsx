@@ -80,14 +80,40 @@ function CheckOut() {
         const selectedDateTime = new Date(selectedDate);
         console.log('Selected date time = ', selectedDateTime);
 
-        // Check if the selected date is before the cutoff time
-        if (isBefore(selectedDateTime, cutoffTime)) {
-            return true; // Selectable if before cutoff
+        // Get today's date without time for comparison
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Set time to midnight
+
+        // Check if the selected date is today
+        if (selectedDateTime.setHours(0, 0, 0, 0) === today.getTime()) {
+            // Check if the selected date is before the cutoff time
+            if (isBefore(selectedDateTime, cutoffTime)) {
+                return true; // Selectable if before cutoff
+            }
+
+            if (isAfter(selectedDateTime, cutoffTime)) {
+                return false; // Not selectable if after cutoff
+            }
         }
 
-        if (isAfter(selectedDateTime, cutoffTime)) {
-            return false; // Not selectable if after cutoff
+        // If the selected date is in the future (after today)
+        if (selectedDateTime > today) {
+            return true; // Selectable if after today
         }
+
+        // If the selected date is in the past (before today)
+        if (selectedDateTime < today) {
+            return false; // Not selectable if before today
+        }
+
+        // Check if the selected date is before the cutoff time
+        // if (isBefore(selectedDateTime, cutoffTime)) {
+        //     return true; // Selectable if before cutoff
+        // }
+
+        // if (isAfter(selectedDateTime, cutoffTime)) {
+        //     return false; // Not selectable if after cutoff
+        // }
 
         // Allow selection if the date is within the next 7 days
         // return !isAfter(selectedDateTime, endDate);
