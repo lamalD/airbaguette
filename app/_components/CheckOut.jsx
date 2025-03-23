@@ -92,13 +92,13 @@ function CheckOut() {
             // if (isBefore(selectedDateTime, cutoffTime)) {
                 if (selectedDateTime < cutoffTime) {
                     console.log('selectedDateTime < cutt off')
-                return true; // Selectable if before cutoff
+                return false; // Selectable if before cutoff
             }
 
             // if (isAfter(selectedDateTime, cutoffTime)) {
                 if (selectedDateTime > cutoffTime) {
                     console.log('selectedDateTime > cutt off')
-                return false; // Not selectable if after cutoff
+                return true; // Not selectable if after cutoff
             }
         }
 
