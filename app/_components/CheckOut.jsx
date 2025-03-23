@@ -86,7 +86,7 @@ function CheckOut() {
         console.log('today: ', today)
 
         // Check if the selected date is today
-        if (selectedDateTime.setHours(0, 0, 0, 0) === today.getTime()) {
+        if (selectedDateTime.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0)) {
             // Check if the selected date is before the cutoff time
             if (isBefore(selectedDateTime, cutoffTime)) {
                 return true; // Selectable if before cutoff
