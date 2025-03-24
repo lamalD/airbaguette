@@ -90,13 +90,13 @@ function CheckOut() {
             console.log('today, still ok for cutt off')
             // Check if the selected date is before the cutoff time
             // if (isBefore(selectedDateTime, cutoffTime)) {
-                if (selectedDateTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds()) < cutoffTime) {
+                if (selectedDateTime < cutoffTime) {
                     console.log('selectedDateTime < cutt off')
                 return true; // Selectable if before cutoff
             }
 
             // if (isAfter(selectedDateTime, cutoffTime)) {
-                if (selectedDateTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds()) > cutoffTime) {
+                if (selectedDateTime > cutoffTime) {
                     console.log('selectedDateTime > cutt off')
                 return false; // Not selectable if after cutoff
             }
