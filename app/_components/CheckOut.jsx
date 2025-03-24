@@ -62,7 +62,7 @@ function CheckOut() {
     // Set the cutoff time to 08:50 GMT+1 today
     const setCutoffTime = () => {
         const today = new Date();
-        today.setHours(9, 0, 0, 0); // Set to 08:50:00
+        today.setHours(9, 0, 0, 0); // Set to 09:00:00
         // Adjust for GMT+1
         today.setMinutes(today.getMinutes() + today.getTimezoneOffset() + 60);
         return today;
@@ -90,15 +90,15 @@ function CheckOut() {
             console.log('today, still ok for cutt off')
             // Check if the selected date is before the cutoff time
             // if (isBefore(selectedDateTime, cutoffTime)) {
-                if (selectedDateTime < cutoffTime) {
+                if (selectedDateTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds()) < cutoffTime) {
                     console.log('selectedDateTime < cutt off')
-                return false; // Selectable if before cutoff
+                return true; // Selectable if before cutoff
             }
 
             // if (isAfter(selectedDateTime, cutoffTime)) {
-                if (selectedDateTime > cutoffTime) {
+                if (selectedDateTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds()) > cutoffTime) {
                     console.log('selectedDateTime > cutt off')
-                return true; // Not selectable if after cutoff
+                return false; // Not selectable if after cutoff
             }
         }
 
