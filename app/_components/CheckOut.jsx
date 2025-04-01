@@ -59,12 +59,12 @@ function CheckOut() {
     const startDate = new Date()
     const endDate = addDays(new Date(), 7)
 
-    // Set the cutoff time to 08:50 GMT+1 today
+    // Set the cutoff time to 09:10 GMT+1 today
     const setCutoffTime = () => {
         const today = new Date();
         today.setHours(9, 0, 0, 0); // Set to 09:00:00
         // Adjust for GMT+1
-        today.setMinutes(today.getMinutes() + today.getTimezoneOffset() + 60);
+        today.setMinutes(today.getMinutes() + today.getTimezoneOffset() + 120);
         return today;
     }
 
