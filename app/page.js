@@ -1,3 +1,4 @@
+import BannerHomepage from "./_components/Banner_Home";
 import CategoryList from "./_components/CategoryList";
 import DeliveryDetails from "./_components/DeliveryDetails";
 import Footer from "./_components/Footer";
@@ -16,6 +17,7 @@ export default async function Home() {
 
   return (
     <div className="p-5 md:p-10 px-18 space-y-6 flex flex-col">
+      <BannerHomepage />
       <DeliveryDetails />
       <CategoryList categoryList={categoryList} className='flex md:hidden'/>
       <Slider sliderList={sliderList} />

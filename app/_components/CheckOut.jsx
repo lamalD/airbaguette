@@ -239,7 +239,7 @@ function CheckOut() {
                   phone: phone,
                 //   paymentId: paymentId,
                 //   paymentDone: true,
-                  deliveryDate: deliveryDate,
+                //   deliveryDate: deliveryDate,
                   // orderItemList: cartItemList.map(item => ({
                   //     product: item.product,
                   //     amount: item.amount,
@@ -289,7 +289,7 @@ function CheckOut() {
               // router.push('/')
           } catch (error) {
               console.error('Error during order completion:', error);
-              toast.error('An error occurred while completing the order');
+            //   toast.error('An error occurred while completing the order');
         }
     }
 

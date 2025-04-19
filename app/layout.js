@@ -19,7 +19,7 @@ const orbitron = Orbitron({ subsets: ['latin']})
 export default function RootLayout({ children }) {
 
   const params = usePathname()
-  const showHeader = params == '/sign-in'|| params == '/create-account' ? false : true
+  const showHeader = params == '/sign-in'|| params == '/create-account' || params.startsWith('/admin') ? false : true
 
   const [updateCart, setUpdateCart] = useState(false)
 

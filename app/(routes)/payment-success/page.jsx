@@ -76,13 +76,13 @@ function SuccessPage() {
               // totalOrderAmount: amount,
               // userId: storedUser.id,
               // username: storedUser.username,
-              // firstName: firstName,
-              // lastName: lastName,
-              // email: email,
-              // phone: phone,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              phone: phone,
               paymentId: paymentId,
               paymentDone: true,
-              // deliveryDate: deliveryDate,
+              deliveryDate: deliveryDate,
               // orderItemList: cartItemList.map(item => ({
               //     product: item.product,
               //     amount: item.amount,
@@ -149,7 +149,7 @@ function SuccessPage() {
 
           <div className="mt-5 text-lg">
               <p>Bedankt, {firstName} , voor je bestelling!</p>
-              <p>Wij bezorgen je bestelling op {deliveryDate} om 11:30 in de break room van Brussels Airlines Training Center.</p>
+              <p>Wij bezorgen je bestelling op {deliveryDate} om 12:00 in de frigo aanwezig in break room van het Brussels Airlines Training Center.</p>
               <p>Voor al uw vragen/opmerkingen/suggesties, kan u ons steeds contacteren via <a href='mailto:contact@airbaguette.be'>contact@airbaguette.be</a>.</p>
           </div>
         </div>

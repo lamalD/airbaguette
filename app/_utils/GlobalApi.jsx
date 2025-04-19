@@ -13,7 +13,7 @@ const getCategoryList = () => axiosClient.get('/categories?populate=*').then(res
 const getSliders = () => axiosClient.get('/sliders?populate=*').then(resp => {return(resp.data.data)})
 const getPromoSliders = () => axiosClient.get('/sliders-promo?populate=*').then(resp => {return(resp.data.data)})
 
-const getAllProducts = () => axiosClient.get('/products?populate=*').then(resp => {return(resp.data.data)})
+const getAllProducts = () => axiosClient.get('/products?pagination[pageSize]=100&populate=*').then(resp => {return(resp.data.data)})
 const getProductsByCategory = (category) => axiosClient.get(`/products?pagination[pageSize]=100&filters[category][name][$in]=${category}&populate=*`).then(resp => {
     return(resp.data.data.sort((a, b) => a.name.localeCompare(b.name)))
 })
