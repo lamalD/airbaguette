@@ -239,7 +239,7 @@ function CheckOut() {
                   phone: phone,
                 //   paymentId: paymentId,
                 //   paymentDone: true,
-                //   deliveryDate: deliveryDate,
+                  deliveryDate: deliveryDate,
                   // orderItemList: cartItemList.map(item => ({
                   //     product: item.product,
                   //     amount: item.amount,

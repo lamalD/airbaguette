@@ -11,7 +11,7 @@ const getLastUser = () => axiosClient.get('/users').then(resp => {
 })
 const getUsersCount = () => axiosClient.get('/users/count')
 
-const getAllOrders = () => axiosClient.get('/orders?pagination[pageSize]=100&populate=*')
+const getAllOrders = () => axiosClient.get('/orders?pagination[pageSize]=1000&populate=*')
     .then(resp => {return(resp.data.data.sort((a, b) => a.createdAt.localeCompare(b.createdAt)))})
 
 export default {

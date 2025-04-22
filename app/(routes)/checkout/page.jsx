@@ -97,7 +97,7 @@ function Checkout() {
 
       console.log('subtotal = ', subtotal)
       
-      handlePayment(subtotal)
+      // handlePayment(subtotal)
   
     }
 
