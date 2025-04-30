@@ -219,6 +219,8 @@ function CheckOut() {
         .then((data) => setClientSecret(data.clientSecret))   
     }
 
+    
+
     const updateOrder = async (deliveryDate) => {
         const storedUser  = JSON.parse(sessionStorage.getItem('user'))
         const storedJwt = sessionStorage.getItem('jwt')

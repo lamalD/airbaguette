@@ -12,6 +12,9 @@ function BannerHomepage() {
             <p className='text-center text-sm md:text-2xl text-red-600'>
                 Bestellen kan tot 09h00 de dag zelf, ook in het weekend!
             </p>
+            <p className='text-center text-sm md:text-2xl text-red-600'>
+                Ook op 01/05 leveren wij!!!
+            </p>
         </div>
     </div>
   )
