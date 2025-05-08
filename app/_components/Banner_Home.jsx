@@ -10,7 +10,7 @@ function BannerHomepage() {
                         sm:px-6
                         md:space-x-8 max-w-5xl lg:px-8">
             <p className='text-center text-sm md:text-2xl text-red-600'>
-                Bestellen kan tot 09h00 de dag zelf, ook in het weekend!
+                Bestellen kan tot 09h30 de dag zelf, ook in het weekend!
             </p>
             {/* <p className='text-center text-sm md:text-2xl text-red-600'>
                 Ook op 01/05 leveren wij!!!
