@@ -43,7 +43,7 @@ function Checkout() {
   const [zip, setZip] = useState()
   const [address, setAddress] = useState()
 
-  console.log('checkout page loaded')
+  // console.log('checkout page loaded')
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

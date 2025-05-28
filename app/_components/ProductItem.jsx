@@ -87,31 +87,6 @@ const formatDescription = (description) => {
                 {product.sellingPrice && <h2 className='font-bold text-lg md:text-2xl'>€ {product.sellingPrice}</h2>}
                 <h2 className={`font-bold text-lg md:text-2xl ${product.sellingPrice&&'line-through text-red-500'}`}>€ {product.mrp}</h2>
             </div>
-
-            {/* <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                    <div className='flex flex-row items-center justify-center px-1.5 py-0.5 md:p-2 border rounded-lg bg-primary text-white hover:cursor-pointer hover:bg-secondary hover:text-primary ease-in-out'>
-                        <Plus 
-                            size={24} 
-                            strokeWidth={3}
-                            className='w-6'
-                        />
-                        <ShoppingBasket 
-                            size={48}
-                            className='w-6'
-                        />
-                    </div>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                    <DialogTitle></DialogTitle>
-                        <DialogDescription>
-                            <ProductItemDetail product={product} onClose={closeDialog}/>
-                        </DialogDescription>
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog> */}
-
             {product.inStock ? (
                     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                         <DialogTrigger asChild>

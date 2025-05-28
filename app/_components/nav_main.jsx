@@ -41,7 +41,7 @@ function NavMain({ items }) {
               <SidebarMenuButton asChild>
                 <Link href={item.url}>
                   {item.icon && <item.icon />}
-                  <span>{item.title}</span>
+                  <span className="text-xl">{item.title}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

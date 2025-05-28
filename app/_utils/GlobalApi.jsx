@@ -17,6 +17,13 @@ const getAllProducts = () => axiosClient.get('/products?pagination[pageSize]=100
 const getProductsByCategory = (category) => axiosClient.get(`/products?pagination[pageSize]=100&filters[category][name][$in]=${category}&populate=*`).then(resp => {
     return(resp.data.data.sort((a, b) => a.name.localeCompare(b.name)))
 })
+// const getProductsForPromo = (category) => axiosClient.get(`/products?pagination[pageSize]=1000&filters[category][name][$in]=Nieuw&populate[0]=category`).then(resp => {
+//     return(resp.data.data)
+// })
+
+const getProductsForPromo = (category) => axiosClient.get(`/products?pagination[pageSize]=1000&filters[category][name][$in]=Nieuw&populate=*`).then(resp => {
+    return(resp.data.data)
+})
 
 const registerUser = (username, email, password) => axiosClient.post('/auth/local/register', {
     username: username,
@@ -98,6 +105,7 @@ export default {
     getPromoSliders,
     getAllProducts,
     getProductsByCategory,
+    getProductsForPromo,
     registerUser,
     signInUser,
     addToCart,
