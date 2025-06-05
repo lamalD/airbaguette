@@ -92,41 +92,43 @@ function OrdersAdmin() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               {/* <SectionCards /> */}
-              <div className="px-4 lg:px-6">
-                {/* <ChartAreaInteractive /> */}
-              </div>
-              
-              <Table>
-                <TableCaption>Overzicht recente bestellingen</TableCaption>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-primary">Datum</TableHead>
-                    <TableHead className='text-primary'>Status</TableHead>
-                    <TableHead className='text-primary'>#Bestellingen</TableHead>
-                    <TableHead className="text-right text-primary">Totaal (€)</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                {orderList.map(({ date, orders }, index) => {
-                  // Ensure orders is an array
-                  if (!Array.isArray(orders)) {
-                    console.error(`Expected orders to be an array for date ${date}, but got:`, orders);
-                    return null; // Skip this entry if orders is not an array
-                  }
-                  // Calculate total amount
-                  const totalAmount = orders.reduce((sum, order) => sum + order.totalOrderAmount, 0);
-                  const totalOrders = orders.length; // Number of orders for that date
-                  return (
-                    <TableRow key={index}>
-                      <TableCell className="font-medium">{date}</TableCell>
-                      <TableCell>Paid</TableCell> {/* You can modify this based on your order status */}
-                      <TableCell className='text-right'>{totalOrders}</TableCell> {/* Display the total number of orders */}
-                      <TableCell className="text-right">€ {totalAmount.toFixed(2)}</TableCell> {/* Format the total amount */}
+                            
+              <div className="w-full">
+                <Table className="table-fixed w-full">
+                  {/* <TableCaption>Overzicht recente bestellingen</TableCaption> */}
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-primary bg-secondary">Datum</TableHead>
+                      <TableHead className="text-primary text-center w-[50%] bg-secondary">Status</TableHead>
+                      <TableHead className="text-primary text-center">#Bestellingen</TableHead>
+                      <TableHead className="text-right text-primary">Totaal (€)</TableHead>
                     </TableRow>
-                  );
-                })}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                </Table>
+                {/* Scroll container */}
+                <div className="w-full max-h-[400px] overflow-y-auto">
+                  <Table className="table-fixed w-full">
+                    <TableBody>
+                      {orderList.map(({ date, orders }, index) => {
+                        if (!Array.isArray(orders)) {
+                          console.error(`Expected orders to be an array for date ${date}, but got:`, orders);
+                          return null;
+                        }
+                        const totalAmount = orders.reduce((sum, order) => sum + order.totalOrderAmount, 0);
+                        const totalOrders = orders.length;
+                        return (
+                          <TableRow key={index}>
+                            <TableCell className="font-medium">{date}</TableCell>
+                            <TableCell className='text-center w-[50%]'>Paid</TableCell>
+                            <TableCell className="text-center">{totalOrders}</TableCell>
+                            <TableCell className="text-right">€ {totalAmount.toFixed(2)}</TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
+              </div>
 
             </div>
           </div>
