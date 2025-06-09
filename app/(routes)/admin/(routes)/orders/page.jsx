@@ -36,6 +36,8 @@ function OrdersAdmin() {
   const [jwt, setJwt] = useState(null)
 
   const [orderList, setOrderList] = useState([])
+  const [totalCurrentOrders, setTotalCurrentOrders] = useState([])
+  const [orderState, setOrderState] = useState("open")
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -53,9 +55,47 @@ function OrdersAdmin() {
   useEffect(() => {
 
     processOrders()
+    // updateOrderStatus()
 
   }, [])
 
+  const checkOrderStatus = async () => {
+    const currentOrders = await AdminApi.getCurrentOrders()
+    
+    console.log("currentOrders: ", currentOrders)
+
+    setTotalCurrentOrders(currentOrders)
+  }
+
+  const updateOrderStatus = async (value) => {
+
+    setOrderState(value)
+
+    console.log("orderList[0]: ", orderList[0])
+    console.log("orderList[0].orders: ", orderList[0].orders)
+
+
+    switch (value) {
+      case 'open':
+        console.log('Order is Open')
+        break;
+      case 'afgesloten':
+        console.log('Order is Afgesloten (09h31)')
+        break;
+      case 'klaar':
+        console.log('Order is Klaar voor levering')
+        break;
+      case 'levering':
+        console.log('Order is onderweg voor Levering')
+        break;
+      case 'geleverd':
+        console.log('Order is Geleverd')
+        break
+    
+      default:
+        break;
+    }
+  }
   const processOrders = async () => {
 
     try {
@@ -82,7 +122,6 @@ function OrdersAdmin() {
     }
   }
 
-
   return (
     <SidebarProvider>
       <Admin_Sidebar variant="inset" />
@@ -97,11 +136,11 @@ function OrdersAdmin() {
                 <Table className="table-fixed w-full">
                   {/* <TableCaption>Overzicht recente bestellingen</TableCaption> */}
                   <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-primary bg-secondary">Datum</TableHead>
-                      <TableHead className="text-primary text-center w-[50%] bg-secondary">Status</TableHead>
+                    <TableRow className="bg-secondary">
+                      <TableHead className="text-primary">Datum</TableHead>
+                      <TableHead className="text-primary text-center w-[50%]">Status</TableHead>
                       <TableHead className="text-primary text-center">#Bestellingen</TableHead>
-                      <TableHead className="text-right text-primary">Totaal (€)</TableHead>
+                      <TableHead className="text-right text-primary pr-5">Totaal (€)</TableHead>
                     </TableRow>
                   </TableHeader>
                 </Table>
@@ -117,11 +156,38 @@ function OrdersAdmin() {
                         const totalAmount = orders.reduce((sum, order) => sum + order.totalOrderAmount, 0);
                         const totalOrders = orders.length;
                         return (
-                          <TableRow key={index}>
-                            <TableCell className="font-medium">{date}</TableCell>
-                            <TableCell className='text-center w-[50%]'>Paid</TableCell>
-                            <TableCell className="text-center">{totalOrders}</TableCell>
-                            <TableCell className="text-right">€ {totalAmount.toFixed(2)}</TableCell>
+                          <TableRow 
+                            key={index} 
+                            className=""
+                          >
+                            <TableCell className="font-medium hover:cursor-default">{date}</TableCell>
+                            <TableCell className='text-center w-[50%] hover:cursor-pointer'>
+                              {index === 0 ? (
+                                <Select
+                                  className="text-center"
+                                  value={orderState} 
+                                  onValueChange={(value) => updateOrderStatus(value)}
+                                >
+                                  <SelectTrigger className="flex justify-between mx-auto w-[50%]">
+                                    <SelectValue placeholder="Select a state" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectGroup>
+                                      <SelectLabel>Status</SelectLabel>
+                                      <SelectItem value="open">Open</SelectItem>
+                                      <SelectItem value="afgesloten">Afgesloten</SelectItem>
+                                      <SelectItem value="klaar">Klaar</SelectItem>
+                                      <SelectItem value="levering">Uit voor Levering</SelectItem>
+                                      <SelectItem value="geleverd">Geleverd</SelectItem>
+                                    </SelectGroup>
+                                  </SelectContent>
+                                </Select>
+                              ) : (
+                                <span className="text-white bg-green-950 px-20 py-2 rounded-md">Geleverd</span> // Of een andere inhoud
+                              )}
+                            </TableCell>
+                            <TableCell className="text-center hover:cursor-default">{totalOrders}</TableCell>
+                            <TableCell className="font-bold text-right pr-3 hover:cursor-default">€ {totalAmount.toFixed(2)}</TableCell>
                           </TableRow>
                         );
                       })}

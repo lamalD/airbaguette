@@ -8,7 +8,7 @@ import { useState } from 'react'
 import AdminApi from '../_utils/AdminApi'
 import GlobalApi from '../_utils/GlobalApi'
 
-import { PackageIcon, ShoppingCartIcon, TrendingDownIcon, TrendingUpIcon, UserIcon, Check } from "lucide-react"
+import { PackageIcon, ShoppingCartIcon, TrendingDownIcon, TrendingUpIcon, UserIcon, Check, Truck, Package, PackageCheck } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,6 +19,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+
 
 function SectionCards(storedJwt) {
 
@@ -92,10 +94,12 @@ function SectionCards(storedJwt) {
   const getAllCurrentOrders = async () => {
     const currentOrders = await AdminApi.getCurrentOrders()
 
+    console.log("currentOrders: ", currentOrders[0].orderItemList[0].product.category[0].name)
+
     setTotalCurrentOrders(currentOrders)
   }
 
-  const updateOrderState = async (orderState, orderId) => {
+  const updateOrderReady = async (orderState, orderId) => {
 
     try {
       if (orderState) {
@@ -113,6 +117,68 @@ function SectionCards(storedJwt) {
           const payload = {
             data : {
               orderReady: true,
+            }
+        }
+        
+        await AdminApi.completeOrder(orderId, payload, storedJwt)
+
+        getAllCurrentOrders()
+
+      }
+    } catch (error) {
+      console.error("Failed to update order state:", error);
+    }
+  }
+
+  const updateOutForDelivery = async (orderState, orderId) => {
+
+    try {
+      if (orderState) {
+        const payload = {
+          data : {
+            outForDelivery: false,
+          }
+        }
+        
+        await AdminApi.openOrder(orderId, payload, storedJwt)
+
+        getAllCurrentOrders()
+
+      } else {
+          const payload = {
+            data : {
+              outForDelivery: true,
+            }
+        }
+        
+        await AdminApi.completeOrder(orderId, payload, storedJwt)
+
+        getAllCurrentOrders()
+
+      }
+    } catch (error) {
+      console.error("Failed to update order state:", error);
+    }
+  }
+
+  const updateOrderDelivered = async (orderState, orderId) => {
+
+    try {
+      if (orderState) {
+        const payload = {
+          data : {
+            orderDelivered: false,
+          }
+        }
+        
+        await AdminApi.openOrder(orderId, payload, storedJwt)
+
+        getAllCurrentOrders()
+
+      } else {
+          const payload = {
+            data : {
+              orderDelivered: true,
             }
         }
         
@@ -241,6 +307,20 @@ function SectionCards(storedJwt) {
 
                     console.log('orderState: ', orderState)
 
+                    let orderOutForDelivery = ''
+                    if (order.outForDelivery) {
+                      orderOutForDelivery = true
+                    } else orderOutForDelivery = false
+
+                    console.log('orderOutForDelivery: ', orderOutForDelivery)
+
+                    let orderIsDelivered = ''
+                    if (order.orderDelivered) {
+                      orderIsDelivered = true
+                    } else orderIsDelivered = false
+
+                    console.log('orderIsDelivered: ', orderIsDelivered)
+
                     return (
                       <div key={index} className='flex flex-col p-2 mb-5 border border-primary rounded-md'>
                         <div className='flex justify-between items-center p-2 mb-2 border border-secondary rounded-md'>
@@ -257,24 +337,60 @@ function SectionCards(storedJwt) {
                             <div className={`flex font-bold items-center justify-end ${iconColor}`}>
                               € {order.totalOrderAmount}
                             </div>
-                            <div className='flex items-center justify-end'>
+                            <div className='flex items-center justify-end space-x-3'>
+                              
                               <Button 
                                 variant="outline" 
                                 size="icon" 
                                 className={`${orderState ? 'bg-green-600 hover:bg-green-600 hover:bg-opacity-50' : 'bg-red-600 hover:bg-red-600 hover:bg-opacity-50'}`}
-                                onClick={() => updateOrderState(order.orderReady, order.documentId)}
+                                onClick={() => updateOrderReady(order.orderReady, order.documentId)}
                               >
                                 <Check className={`${orderState ? 'text-white' : 'text-white'}`}/>
+                              </Button>
+                              <Button 
+                                variant="outline" 
+                                size="md" 
+                                className={`w-[36px] h-[36px] ${orderOutForDelivery ? 'bg-green-600 hover:bg-green-600 hover:bg-opacity-50' : 'bg-red-600 hover:bg-red-600 hover:bg-opacity-50'}`}
+                                onClick={() => updateOutForDelivery(order.outForDelivery, order.documentId)}
+                              >
+                                <Truck className={`${orderOutForDelivery ? 'text-white' : 'text-white'}`} size={48}/>
+                              </Button>
+                              <Button 
+                                variant="outline" 
+                                size="md" 
+                                className={`w-[36px] h-[36px] ${orderIsDelivered ? 'bg-green-600 hover:bg-green-600 hover:bg-opacity-50' : 'bg-red-600 hover:bg-red-600 hover:bg-opacity-50'}`}
+                                onClick={() => updateOrderDelivered(order.orderDelivered, order.documentId)}
+                              >
+                                { 
+                                  orderIsDelivered ? 
+                                  (
+                                    <PackageCheck className={`${orderOutForDelivery ? 'text-white' : 'text-white'}`} size={48}/>
+                                  ) 
+                                  : 
+                                  (
+                                    <Package className={`${orderOutForDelivery ? 'text-white' : 'text-white'}`} size={48}/>
+                                  )
+                                }
                               </Button>
                             </div>
                           </div>
                         </div>
                         <div className='mt-2'>
                           {order.orderItemList.map((item, itemIndex) => (
-                            <div key={itemIndex} className='flex justify-start space-x-4 p-2 border border-gray-300 rounded-md mb-2 text-sm'>
-                              <span>{item.quantity}</span>
-                              <span>x</span>
-                              <span>{item.product.name}</span>
+                            <div className='flex justify-between items-center p-2 border border-gray-300 rounded-md mb-2 text-sm'>
+                              <div key={itemIndex} className='flex justify-start items-center space-x-4'>
+                                <img 
+                                  src={`${item.product.category[0].name}.png`} 
+                                  alt={item.product.name} 
+                                  className="w-7 h-7 object-cover rounded"
+                                />
+                                <span>{item.quantity}</span>
+                                <span>x</span>
+                                <span>{item.product.name}</span>
+                              </div>
+                              <div className='mr-5'>
+                                <Checkbox className="border-black data-[state=checked]:bg-green-600 data-[state=checked]:text-primary-foreground"/>
+                              </div>
                             </div>
                           ))}
                         </div>

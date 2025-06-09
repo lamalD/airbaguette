@@ -11,7 +11,7 @@ const getLastUser = () => axiosClient.get('/users').then(resp => {
 })
 const getUsersCount = () => axiosClient.get('/users/count')
 
-const getCurrentOrders = () => axiosClient.get('/orders?pagination[pageSize]=1000&populate[0]=orderItemList&populate[1]=orderItemList.product')
+const getCurrentOrders = () => axiosClient.get('/orders?pagination[pageSize]=1000&populate[0]=orderItemList&populate[1]=orderItemList.product&populate[2]=orderItemList.product.category')
     .then(resp => {return(resp.data.data.sort((a, b) => b.createdAt.localeCompare(a.createdAt)))})
 
 const getAllOrders = () => axiosClient.get('/orders?pagination[pageSize]=1000&populate[0]=orderItemList&populate[1]=orderItemList.product&status=draft')
