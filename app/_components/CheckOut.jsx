@@ -384,7 +384,7 @@ function CheckOut() {
                     <div className='flex flex-col items-center justify-between mb-10 space-y-2'>
                         <div className='flex flex-col gap-2 mb-2'>
                             <h2 className='text-left font-bold'>Datum voor levering</h2>
-                            <Popover className='' open={isOpen} onOpenChange={setIsOpen}>
+                            {/* <Popover className='' open={isOpen} onOpenChange={setIsOpen}>
                                 <PopoverTrigger asChild>
                                     <Button
                                     variant={"outline"}
@@ -424,7 +424,7 @@ function CheckOut() {
                                         />
                                     </div>
                                 </PopoverContent>
-                            </Popover>
+                            </Popover> */}
                         </div>
                         <Separator />
                         <div className='flex flex-col w-full gap-2 py-2'>

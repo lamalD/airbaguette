@@ -8,7 +8,7 @@ import { useState } from 'react'
 import AdminApi from '../_utils/AdminApi'
 import GlobalApi from '../_utils/GlobalApi'
 
-import { PackageIcon, ShoppingCartIcon, TrendingDownIcon, TrendingUpIcon, UserIcon, Check, Truck, Package, PackageCheck } from "lucide-react"
+import { PackageIcon, ShoppingCartIcon, UserIcon, Check, Truck, Package, PackageCheck, Mail, MailCheck } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -161,6 +161,37 @@ function SectionCards(storedJwt) {
     }
   }
 
+  const updateMailSend = async (mailState, orderId) => {
+
+    try {
+      if (mailState) {
+        const payload = {
+          data : {
+            mailSend: false,
+          }
+        }
+        
+        await AdminApi.openOrder(orderId, payload, storedJwt)
+
+        getAllCurrentOrders()
+
+      } else {
+          const payload = {
+            data : {
+              mailSend: true,
+            }
+        }
+        
+        await AdminApi.completeOrder(orderId, payload, storedJwt)
+
+        getAllCurrentOrders()
+
+      }
+    } catch (error) {
+      console.error("Failed to update order state:", error);
+    }
+  }
+
   const updateOrderDelivered = async (orderState, orderId) => {
 
     try {
@@ -289,7 +320,7 @@ function SectionCards(storedJwt) {
                   ) 
                   : 
                   (
-                    totalCurrentOrders.map((order, index) => {
+                    totalCurrentOrders.map((order) => {
                     // Determine the icon color based on the order properties
                     let iconColor = '';
                     if (!order.paymentDone && (!order.deliveryDate || order.deliveryDate.trim() === '')) {
@@ -299,6 +330,13 @@ function SectionCards(storedJwt) {
                     } else if (order.paymentDone && order.deliveryDate) {
                       iconColor = 'text-green-600'; // Green color for payment done and delivery date filled
                     }
+
+                    let mailState = ''
+                    if (order.mailSend) {
+                      mailState = true
+                    } else mailState = false
+
+                    console.log('mailState: ', mailState)
 
                     let orderState = ''
                     if (order.orderReady) {
@@ -319,10 +357,13 @@ function SectionCards(storedJwt) {
                       orderIsDelivered = true
                     } else orderIsDelivered = false
 
-                    console.log('orderIsDelivered: ', orderIsDelivered)
+                    // console.log('orderIsDelivered: ', orderIsDelivered)
 
+                    // console.log('Order ID:', order.documentId);
+                    
                     return (
-                      <div key={index} className='flex flex-col p-2 mb-5 border border-primary rounded-md'>
+                      <div key={order.documentId} className='flex flex-col p-2 mb-5 border border-primary rounded-md'>
+                        
                         <div className='flex justify-between items-center p-2 mb-2 border border-secondary rounded-md'>
                           <div className='grid grid-cols-5 gap-4 text-sm w-full'>
                             <div className={`flex font-bold items-center justify-start ${orderState ? 'text-green-600' : 'text-red-600'}`}>
@@ -338,7 +379,23 @@ function SectionCards(storedJwt) {
                               € {order.totalOrderAmount}
                             </div>
                             <div className='flex items-center justify-end space-x-3'>
-                              
+                              <Button 
+                                variant="outline" 
+                                size="md" 
+                                className={`w-[36px] h-[36px] ${mailState ? 'bg-green-600 hover:bg-green-600 hover:bg-opacity-50' : 'bg-red-600 hover:bg-red-600 hover:bg-opacity-50'}`}
+                                onClick={() => updateMailSend(order.mailState, order.documentId)}
+                              >
+                                { 
+                                  orderIsDelivered ? 
+                                  (
+                                    <MailCheck className={`${mailState ? 'text-white' : 'text-white'}`} size={48}/>
+                                  ) 
+                                  : 
+                                  (
+                                    <Mail className={`${mailState ? 'text-white' : 'text-white'}`} size={48}/>
+                                  )
+                                }
+                              </Button>
                               <Button 
                                 variant="outline" 
                                 size="icon" 
@@ -376,23 +433,26 @@ function SectionCards(storedJwt) {
                           </div>
                         </div>
                         <div className='mt-2'>
-                          {order.orderItemList.map((item, itemIndex) => (
-                            <div className='flex justify-between items-center p-2 border border-gray-300 rounded-md mb-2 text-sm'>
-                              <div key={itemIndex} className='flex justify-start items-center space-x-4'>
-                                <img 
-                                  src={`${item.product.category[0].name}.png`} 
-                                  alt={item.product.name} 
-                                  className="w-7 h-7 object-cover rounded"
-                                />
-                                <span>{item.quantity}</span>
-                                <span>x</span>
-                                <span>{item.product.name}</span>
+                          {order.orderItemList.map((item, itemIndex) => {
+                            // console.log('Item Product ID:', item.product.id);
+                            return (
+                              <div key={`${item.product.id}-${itemIndex}`} className='flex justify-between items-center p-2 border border-gray-300 rounded-md mb-2 text-sm'>
+                                <div className='flex justify-start items-center space-x-4'>
+                                  <img 
+                                    src={`${item.product.category[0].name}.png`} 
+                                    alt={item.product.name} 
+                                    className="w-7 h-7 object-cover rounded"
+                                  />
+                                  <span>{item.quantity}</span>
+                                  <span>x</span>
+                                  <span>{item.product.name}</span>
+                                </div>
+                                <div className='mr-5'>
+                                  <Checkbox className="border-black data-[state=checked]:bg-green-600 data-[state=checked]:text-primary-foreground"/>
+                                </div>
                               </div>
-                              <div className='mr-5'>
-                                <Checkbox className="border-black data-[state=checked]:bg-green-600 data-[state=checked]:text-primary-foreground"/>
-                              </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       </div>
                     )

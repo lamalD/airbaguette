@@ -55,25 +55,49 @@ function OrdersAdmin() {
   useEffect(() => {
 
     processOrders()
-    // updateOrderStatus()
+    checkOrderStatus()
+    checkAllOrdersStatus(orderList)
 
   }, [])
 
-  const checkOrderStatus = async () => {
+  const checkAllOrdersStatus = (orderList) => {
+    
+    const allReady = orderList.every(order => order.orderReady === true)
+    const allUnderway = orderList.every(order => order.outForDelivery === true)
+    const allDelivered = orderList.every(order => order.orderDelivered === true)
+    
+    if (allReady) {
+      setOrderState("klaar")
+    } 
+
+    if (allUnderway) {
+      setOrderState("levering")
+    }
+
+    if (allDelivered) {
+      setOrderState("geleverd")
+    }
+  }
+
+  const checkOrderStatus = async (status) => {
+    console.log("status = ", status)
     const currentOrders = await AdminApi.getCurrentOrders()
     
     console.log("currentOrders: ", currentOrders)
 
     setTotalCurrentOrders(currentOrders)
+    // console.log("totalCurrentOrders: ", totalCurrentOrders)
+    checkAllOrdersStatus(orderList)
   }
 
   const updateOrderStatus = async (value) => {
 
     setOrderState(value)
+    
+    checkOrderStatus(value)
 
     console.log("orderList[0]: ", orderList[0])
     console.log("orderList[0].orders: ", orderList[0].orders)
-
 
     switch (value) {
       case 'open':
@@ -81,21 +105,57 @@ function OrdersAdmin() {
         break;
       case 'afgesloten':
         console.log('Order is Afgesloten (09h31)')
+        console.log('totalCurrentOrders: ', totalCurrentOrders)
         break;
       case 'klaar':
         console.log('Order is Klaar voor levering')
+        console.log('totalCurrentOrders: ', totalCurrentOrders)
+        totalCurrentOrders.map(async (order) => {
+          console.log("order: ", order)
+                  const payload = {
+                    data : {
+                      orderReady: true,
+                    }
+                  }
+                  
+                  await AdminApi.openOrder(order.documentId, payload, jwt)
+        })
         break;
       case 'levering':
         console.log('Order is onderweg voor Levering')
+        console.log('totalCurrentOrders: ', totalCurrentOrders)
+        totalCurrentOrders.map(async (order) => {
+          console.log("order: ", order)
+                  const payload = {
+                    data : {
+                      outForDelivery: true,
+                    }
+                  }
+                  
+                  await AdminApi.openOrder(order.documentId, payload, jwt)
+        })
         break;
       case 'geleverd':
         console.log('Order is Geleverd')
+        console.log('totalCurrentOrders: ', totalCurrentOrders)
+        totalCurrentOrders.map(async (order) => {
+          console.log("order: ", order)
+                  const payload = {
+                    data : {
+                      orderDelivered: true,
+                    }
+                  }
+                  
+                  await AdminApi.openOrder(order.documentId, payload, jwt)
+        })
         break
     
       default:
+        console.log('totalCurrentOrders: ', totalCurrentOrders)
         break;
     }
   }
+
   const processOrders = async () => {
 
     try {
@@ -131,7 +191,6 @@ function OrdersAdmin() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               {/* <SectionCards /> */}
-                            
               <div className="w-full">
                 <Table className="table-fixed w-full">
                   {/* <TableCaption>Overzicht recente bestellingen</TableCaption> */}
