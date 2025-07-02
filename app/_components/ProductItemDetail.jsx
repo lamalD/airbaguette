@@ -45,7 +45,7 @@ function ProductItemDetail({product, onClose}) {
         const data = {
             data: {
                 Quantity: quantity,
-                Amount: productTotalPrice.toFixed(2),
+                Amount: quantity * productTotalPrice.toFixed(2),
                 products: product.documentId,
                 user: user.id,
                 userId: user.id
