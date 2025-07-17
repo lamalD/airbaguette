@@ -187,7 +187,7 @@ function CheckOut() {
         let total = 0
         cartItemList.forEach(element => {
           
-            total = total + (element.amount * element.quantity)
+          total = total + element.amount
         });
     
         setSubtotal(total)
