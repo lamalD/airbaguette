@@ -225,7 +225,8 @@ function Header() {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Profile</DropdownMenuItem>
                         <DropdownMenuItem>My Order</DropdownMenuItem> */}
-                        <DropdownMenuItem onClick={() => onSignOut()}>Logout</DropdownMenuItem>
+                        {/* <DropdownMenuItem>Mijn Profiel</DropdownMenuItem> */}
+                        <DropdownMenuItem onClick={() => onSignOut()}>Uitloggen</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             }
