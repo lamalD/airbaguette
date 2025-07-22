@@ -21,12 +21,12 @@ export default async function Home() {
     <div className="p-5 md:p-10 px-18 space-y-6 flex flex-col">
       <BannerHomepage />
       {/* <PromoBoard className='hidden md:flex'/> */}
+      <CategoryList categoryList={categoryList} className='flex sm:hidden'/>
+      <PromoSlider sliderList={sliderPromoList}/>
       <DeliveryDetails />
       {/* <FlightSplitBoard /> */}
-      <CategoryList categoryList={categoryList} className='flex md:hidden'/>
-      <Slider sliderList={sliderList} />
-      <CategoryList categoryList={categoryList} className='hidden md:flex'/>
-      {/* <PromoSlider sliderList={sliderPromoList}/> */}
+      {/* <Slider sliderList={sliderList} /> */}
+      {/* <CategoryList categoryList={categoryList} className='hidden md:flex'/> */}
       {/* <ProductList productList={productList}/> */}
       <Footer />
     </div>

@@ -11,7 +11,6 @@ function BannerHomepage() {
                         md:space-x-8 max-w-5xl lg:px-8">
             <p className='text-center text-sm md:text-xl xl:text-2xl text-red-600'>
                 Bestellen kan tot 09h30 de dag zelf, ook in het weekend en op feestdagen!
-                <br/>Ook at your service op 21 juli!
             </p>
         </div>
     </div>
